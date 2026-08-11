@@ -1,0 +1,115 @@
+{
+  "run_mode": "full",
+  "canh_bao": null,
+  "cau_hinh": {
+    "n_tune_rows": 200000,
+    "n_val_rows": 100000,
+    "n_trials": 12,
+    "n_trials_causal_forest": 6,
+    "n_features": 76,
+    "feature_names": ["f0", "f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "f9", "f10", "f11", "f12", "f13", "f14", "f16", "f17", "f18", "f19", "f20", "f21", "f22", "f23", "f24", "f25", "f26", "f27", "f28", "f29", "f30", "f31", "f34", "f35", "f36", "f37", "f38", "f40", "f41", "f42", "f43", "f44", "f45", "f46", "f47", "f48", "f49", "f50", "f51", "f52", "f53", "f54", "f55", "f56", "f57", "f58", "f59", "f60", "f61", "f62", "f63", "f64", "f65", "f66", "f68", "f75", "f79", "f80", "f81", "f82", "fe_ratio_f1_f2", "fe_ratio_f14_f16", "fe_ratio_f9_f27", "fe_inter_f9_f26", "fe_inter_f14_f27", "fe_nonzero_top10", "fe_flag_sum"],
+    "seed": 42,
+    "propensity_clip": [
+      0.01,
+      0.99
+    ]
+  },
+  "hieu_chinh_tren_val": {
+    "ate_ngay_tho": 0.04719877049549384,
+    "ate_doubly_robust": 0.005504659636758117,
+    "dr_mse_du_doan_hang_so": 0.323420423816309,
+    "ghi_chu": "Hai con số cùng nhắm vào E_Pval[tau(X)]; chỉ đo mức thay đổi do hiệu chỉnh, không kết luận cái nào đúng"
+  },
+  "kiem_tra_transportability": {
+    "ate_mang_sang": 0.007172267374576954,
+    "se_mang_sang": 0.00010670358500214217,
+    "ate_do_tren_rct_select": 0.0037187915667810864,
+    "se_rct_select": 0.001221426755361183,
+    "chenh_lech": 0.0034534758077958676,
+    "se_chenh_lech": 0.0012260786980306184,
+    "chenh_lech_nho_nhat_phat_hien_duoc": 0.002403114248140012,
+    "co_y_nghia_thong_ke": true,
+    "tap_dung": "rct_select",
+    "ghi_chu": "Vế mang sang chưa tính sai số ước lượng của mô hình nên KTC thật còn rộng hơn"
+  },
+  "best_params": {
+    "SLearner": {
+      "params": {
+        "n_estimators": 300,
+        "learning_rate": 0.011340440501807348,
+        "max_depth": 6,
+        "min_child_samples": 29
+      },
+      "dr_mse": 0.3232448962677132,
+      "n_trials": 12,
+      "thanh_cong": true
+    },
+    "TLearner": {
+      "params": {
+        "n_estimators": 400,
+        "learning_rate": 0.022567926626978606,
+        "max_depth": 4,
+        "min_child_samples": 38
+      },
+      "dr_mse": 0.32308174492571584,
+      "n_trials": 12,
+      "thanh_cong": true
+    },
+    "DRLearner": {
+      "params": {
+        "n_estimators": 150,
+        "learning_rate": 0.015256811898068502,
+        "max_depth": 3,
+        "min_child_samples": 147
+      },
+      "dr_mse": 0.3238491919339683,
+      "n_trials": 12,
+      "thanh_cong": true
+    },
+    "LinearDML": {
+      "params": {
+        "nuisance_n_estimators": 100,
+        "nuisance_max_depth": 3,
+        "cv": 5
+      },
+      "dr_mse": 0.32341073309285273,
+      "n_trials": 12,
+      "thanh_cong": true
+    },
+    "NonParamDML": {
+      "params": {
+        "n_estimators": 100,
+        "learning_rate": 0.03822726574649208,
+        "max_depth": 3,
+        "min_child_samples": 162,
+        "nuisance_n_estimators": 150,
+        "nuisance_max_depth": 6,
+        "cv": 5
+      },
+      "dr_mse": 0.3233986116932649,
+      "n_trials": 12,
+      "thanh_cong": true
+    },
+    "CausalForestDML": {
+      "params": {
+        "nuisance_n_estimators": 250,
+        "nuisance_max_depth": 3,
+        "cv": 3,
+        "cf_n_estimators": 100,
+        "cf_min_samples_leaf": 40,
+        "cf_max_depth": 7
+      },
+      "dr_mse": 0.32338653811084944,
+      "n_trials": 6,
+      "thanh_cong": true
+    }
+  },
+  "thu_tu_theo_dr_mse": [
+    "TLearner",
+    "SLearner",
+    "CausalForestDML",
+    "NonParamDML",
+    "LinearDML",
+    "DRLearner"
+  ]
+}

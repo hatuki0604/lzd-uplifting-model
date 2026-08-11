@@ -1,0 +1,489 @@
+{
+  "ten_mo_hinh": "DRLearner",
+  "ngay_huan_luyen": "2026-08-11 15:21:32",
+  "run_mode": "full",
+  "seed": 42,
+  "sieu_tham_so": {
+    "n_estimators": 150,
+    "learning_rate": 0.015256811898068502,
+    "max_depth": 3,
+    "min_child_samples": 147
+  },
+  "dac_trung": [
+    "f0",
+    "f1",
+    "f2",
+    "f3",
+    "f4",
+    "f5",
+    "f6",
+    "f7",
+    "f8",
+    "f9",
+    "f10",
+    "f11",
+    "f12",
+    "f13",
+    "f14",
+    "f16",
+    "f17",
+    "f18",
+    "f19",
+    "f20",
+    "f21",
+    "f22",
+    "f23",
+    "f24",
+    "f25",
+    "f26",
+    "f27",
+    "f28",
+    "f29",
+    "f30",
+    "f31",
+    "f34",
+    "f35",
+    "f36",
+    "f37",
+    "f38",
+    "f40",
+    "f41",
+    "f42",
+    "f43",
+    "f44",
+    "f45",
+    "f46",
+    "f47",
+    "f48",
+    "f49",
+    "f50",
+    "f51",
+    "f52",
+    "f53",
+    "f54",
+    "f55",
+    "f56",
+    "f57",
+    "f58",
+    "f59",
+    "f60",
+    "f61",
+    "f62",
+    "f63",
+    "f64",
+    "f65",
+    "f66",
+    "f68",
+    "f75",
+    "f79",
+    "f80",
+    "f81",
+    "f82",
+    "fe_ratio_f1_f2",
+    "fe_ratio_f14_f16",
+    "fe_ratio_f9_f27",
+    "fe_inter_f9_f26",
+    "fe_inter_f14_f27",
+    "fe_nonzero_top10",
+    "fe_flag_sum"
+  ],
+  "so_dac_trung": 76,
+  "dac_trung_ban_full": [
+    "f0",
+    "f1",
+    "f2",
+    "f3",
+    "f4",
+    "f5",
+    "f6",
+    "f7",
+    "f8",
+    "f9",
+    "f10",
+    "f11",
+    "f12",
+    "f13",
+    "f14",
+    "f16",
+    "f17",
+    "f18",
+    "f19",
+    "f20",
+    "f21",
+    "f22",
+    "f23",
+    "f24",
+    "f25",
+    "f26",
+    "f27",
+    "f28",
+    "f29",
+    "f30",
+    "f31",
+    "f34",
+    "f35",
+    "f36",
+    "f37",
+    "f38",
+    "f40",
+    "f41",
+    "f42",
+    "f43",
+    "f44",
+    "f45",
+    "f46",
+    "f47",
+    "f48",
+    "f49",
+    "f50",
+    "f51",
+    "f52",
+    "f53",
+    "f54",
+    "f55",
+    "f56",
+    "f57",
+    "f58",
+    "f59",
+    "f60",
+    "f61",
+    "f62",
+    "f63",
+    "f64",
+    "f65",
+    "f66",
+    "f68",
+    "f75",
+    "f79",
+    "f80",
+    "f81",
+    "f82",
+    "fe_ratio_f1_f2",
+    "fe_ratio_f14_f16",
+    "fe_ratio_f9_f27",
+    "fe_inter_f9_f26",
+    "fe_inter_f14_f27",
+    "fe_nonzero_top10",
+    "fe_flag_sum"
+  ],
+  "chon_so_dac_trung": {
+    "k_chot": 76,
+    "ly_do": "k nhỏ nhất thỏa mãn cả ba điều kiện (có tính bền)",
+    "luoi_quet": [
+      7,
+      12,
+      17,
+      22,
+      26,
+      31,
+      36,
+      41,
+      76
+    ],
+    "cach_dung_luoi": "cận dưới = k đạt 50% gain, cận trên = số đặc trưng có gain > 0",
+    "dieu_kien": [
+      "KTC Qini không chứa 0",
+      "điều kiện trên đúng ở mọi k lớn hơn (tính bền)",
+      "KTC hiệu so với bản đầy đủ chứa 0"
+    ],
+    "tap_dung_de_chot": "rct_select",
+    "bang_quet": [
+      {
+        "k": 7,
+        "Qini": 0.00778,
+        "Qini_lo": -0.01587,
+        "Qini_hi": 0.03183,
+        "Hiệu so với đầy đủ": 0.01945,
+        "Bền": false,
+        "Đạt": false
+      },
+      {
+        "k": 12,
+        "Qini": 0.00454,
+        "Qini_lo": -0.01718,
+        "Qini_hi": 0.02759,
+        "Hiệu so với đầy đủ": 0.02275,
+        "Bền": false,
+        "Đạt": false
+      },
+      {
+        "k": 17,
+        "Qini": 0.01079,
+        "Qini_lo": -0.01289,
+        "Qini_hi": 0.03522,
+        "Hiệu so với đầy đủ": 0.01627,
+        "Bền": false,
+        "Đạt": false
+      },
+      {
+        "k": 22,
+        "Qini": 0.01212,
+        "Qini_lo": -0.01418,
+        "Qini_hi": 0.03719,
+        "Hiệu so với đầy đủ": 0.01503,
+        "Bền": false,
+        "Đạt": false
+      },
+      {
+        "k": 26,
+        "Qini": 0.01307,
+        "Qini_lo": -0.01034,
+        "Qini_hi": 0.03733,
+        "Hiệu so với đầy đủ": 0.0139,
+        "Bền": false,
+        "Đạt": false
+      },
+      {
+        "k": 31,
+        "Qini": 0.01054,
+        "Qini_lo": -0.01399,
+        "Qini_hi": 0.03393,
+        "Hiệu so với đầy đủ": 0.01652,
+        "Bền": false,
+        "Đạt": false
+      },
+      {
+        "k": 36,
+        "Qini": 0.02148,
+        "Qini_lo": -0.00318,
+        "Qini_hi": 0.04409,
+        "Hiệu so với đầy đủ": 0.00582,
+        "Bền": false,
+        "Đạt": false
+      },
+      {
+        "k": 41,
+        "Qini": 0.02236,
+        "Qini_lo": -0.00214,
+        "Qini_hi": 0.04416,
+        "Hiệu so với đầy đủ": 0.0052,
+        "Bền": false,
+        "Đạt": false
+      },
+      {
+        "k": 76,
+        "Qini": 0.02773,
+        "Qini_lo": 0.00405,
+        "Qini_hi": 0.05043,
+        "Hiệu so với đầy đủ": 0.0,
+        "Bền": true,
+        "Đạt": true
+      }
+    ]
+  },
+  "chon_dac_trung_redis": {
+    "k_redis": 41,
+    "k_toi_thieu_thong_ke": 36,
+    "k_an_toan_tuyet_doi": 41,
+    "ly_do": "mốc an toàn tuyệt đối — sai lệch dự đoán đo được bằng 0",
+    "so_cot_dien_mac_dinh": 35,
+    "cach_do": "giữ nguyên mô hình, thay đặc trưng ngoài top-k bằng trung vị Train+Val, đo Qini trên rct_select",
+    "bang_quet": [
+      {
+        "k": 7,
+        "Qini": 0.03477,
+        "Qini_lo": 0.006858,
+        "Qini_hi": 0.056566,
+        "Lệch dự đoán": 0.624882,
+        "Bền": false,
+        "Đạt": false
+      },
+      {
+        "k": 12,
+        "Qini": 0.015876,
+        "Qini_lo": -0.012007,
+        "Qini_hi": 0.036767,
+        "Lệch dự đoán": 0.324925,
+        "Bền": false,
+        "Đạt": false
+      },
+      {
+        "k": 17,
+        "Qini": 0.021375,
+        "Qini_lo": -0.004893,
+        "Qini_hi": 0.043292,
+        "Lệch dự đoán": 0.299438,
+        "Bền": false,
+        "Đạt": false
+      },
+      {
+        "k": 22,
+        "Qini": 0.015668,
+        "Qini_lo": -0.008686,
+        "Qini_hi": 0.037394,
+        "Lệch dự đoán": 0.270003,
+        "Bền": false,
+        "Đạt": false
+      },
+      {
+        "k": 26,
+        "Qini": 0.019227,
+        "Qini_lo": -0.004198,
+        "Qini_hi": 0.042573,
+        "Lệch dự đoán": 0.251331,
+        "Bền": false,
+        "Đạt": false
+      },
+      {
+        "k": 31,
+        "Qini": 0.023936,
+        "Qini_lo": -8e-05,
+        "Qini_hi": 0.048098,
+        "Lệch dự đoán": 0.026499,
+        "Bền": false,
+        "Đạt": false
+      },
+      {
+        "k": 36,
+        "Qini": 0.028033,
+        "Qini_lo": 0.003928,
+        "Qini_hi": 0.050019,
+        "Lệch dự đoán": 0.013748,
+        "Bền": true,
+        "Đạt": true
+      },
+      {
+        "k": 41,
+        "Qini": 0.027731,
+        "Qini_lo": 0.00405,
+        "Qini_hi": 0.050433,
+        "Lệch dự đoán": 0.0,
+        "Bền": true,
+        "Đạt": true
+      },
+      {
+        "k": 76,
+        "Qini": 0.027731,
+        "Qini_lo": 0.00405,
+        "Qini_hi": 0.050433,
+        "Lệch dự đoán": 0.0,
+        "Bền": true,
+        "Đạt": true
+      }
+    ],
+    "mentor_goi_y": 25
+  },
+  "file_mo_hinh": {
+    "model.pkl": "76 đặc trưng — bản bàn giao, khớp feature_contract.json",
+    "model_full.pkl": "76 đặc trưng — bản có con số holdout một lần"
+  },
+  "du_lieu_huan_luyen": {
+    "nguon": "train.parquet + val.parquet",
+    "so_dong": 926669,
+    "giay_huan_luyen": 35.0
+  },
+  "metric_rct_holdout": {
+    "DRLearner": {
+      "qini": 0.02907,
+      "qini_ci": [
+        0.00411,
+        0.05526
+      ],
+      "auuc": 0.03174,
+      "auuc_ci": [
+        0.00462,
+        0.0601
+      ],
+      "uplift_at_10": 0.015299,
+      "uplift_at_20": 0.010039,
+      "uplift_at_30": 0.009651
+    },
+    "LinearDML": {
+      "qini": 0.01654,
+      "qini_ci": [
+        -0.00534,
+        0.04046
+      ],
+      "auuc": 0.01784,
+      "auuc_ci": [
+        -0.00569,
+        0.0438
+      ],
+      "uplift_at_10": 0.00437,
+      "uplift_at_20": 0.008108,
+      "uplift_at_30": 0.007571
+    },
+    "NonParamDML": {
+      "qini": 0.01398,
+      "qini_ci": [
+        -0.00988,
+        0.03828
+      ],
+      "auuc": 0.01512,
+      "auuc_ci": [
+        -0.01048,
+        0.04127
+      ],
+      "uplift_at_10": 0.013222,
+      "uplift_at_20": 0.010358,
+      "uplift_at_30": 0.0072
+    },
+    "SLearner": {
+      "qini": 0.01391,
+      "qini_ci": [
+        -0.00871,
+        0.03908
+      ],
+      "auuc": 0.01496,
+      "auuc_ci": [
+        -0.00943,
+        0.04204
+      ],
+      "uplift_at_10": 0.010429,
+      "uplift_at_20": 0.00508,
+      "uplift_at_30": 0.007314
+    },
+    "CausalForestDML": {
+      "qini": 0.00044,
+      "qini_ci": [
+        -0.02359,
+        0.02465
+      ],
+      "auuc": 0.00047,
+      "auuc_ci": [
+        -0.02518,
+        0.02659
+      ],
+      "uplift_at_10": 0.014809,
+      "uplift_at_20": 0.005872,
+      "uplift_at_30": 0.00594
+    },
+    "TLearner": {
+      "qini": -0.00213,
+      "qini_ci": [
+        -0.03002,
+        0.02401
+      ],
+      "auuc": -0.00231,
+      "auuc_ci": [
+        -0.03213,
+        0.02593
+      ],
+      "uplift_at_10": 0.010062,
+      "uplift_at_20": 0.007541,
+      "uplift_at_30": 0.005364
+    }
+  },
+  "ate_rct_holdout": {
+    "ate": 0.003760579162227648,
+    "se": 0.001221382033089461,
+    "ci_thap": 0.0013667143660079958,
+    "ci_cao": 0.0061544439584473,
+    "n_treat": 47342,
+    "n_control": 43493
+  },
+  "chon_quan_quan": {
+    "tap_dung": "rct_select",
+    "so_doi_thu_bi_vuot_co_y_nghia": 2,
+    "tong_doi_thu": 5,
+    "tuong_quan_hang_select_vs_holdout": 0.0857
+  },
+  "kiem_chung_metric": {
+    "1. Xếp hạng ngẫu nhiên → Qini ≈ 0": true,
+    "2. ATE khớp phép tính tay": true,
+    "3. Biết trước ≫ ngẫu nhiên": true,
+    "4. Qini giảm đơn điệu theo nhiễu": true
+  },
+  "n_bootstrap": 1000,
+  "ghi_chu": "CausalForestDML huấn luyện trên mẫu con nhỏ hơn các mô hình khác, không so sánh ngang hàng được về mặt cỡ dữ liệu. Qini của bản rút gọn đo trên rct_select — chính tập đã dùng để chọn k — nên lạc quan hơn thực tế; bảng benchmark báo cáo dùng bản đầy đủ."
+}
