@@ -367,6 +367,10 @@
     "model.pkl": "76 đặc trưng — bản bàn giao, khớp feature_contract.json",
     "model_full.pkl": "76 đặc trưng — bản có con số holdout một lần"
   },
+  "serialization": {
+    "writer": "cloudpickle==3.1.2",
+    "reader": "pickle.load"
+  },
   "du_lieu_huan_luyen": {
     "nguon": "train.parquet + val.parquet",
     "so_dong": 926669,

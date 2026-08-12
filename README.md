@@ -10,24 +10,29 @@ Dự án so sánh **DR-Learner family** (Kennedy 2020), các biến thể **Doub
 
 - **Mô hình quán quân:** **DRLearner** (chọn dựa trên hệ số Qini đo trên tập `rct_select`).
 - **Dữ liệu huấn luyện:** Gộp **926.669 dòng** từ `train` + `val`.
-- **Đầu vào mô hình:** 76 đặc trưng (gồm 71 cột gốc sạch + 5 cột kỹ nghệ dẫn xuất).
+- **Đầu vào mô hình:** 76 đặc trưng (gồm 69 cột gốc sạch + 7 cột kỹ nghệ dẫn xuất).
 - **Kết quả đánh giá RCT-holdout (mở đúng 1 lần):**
   - **Qini Score:** `0.0291` (Khoảng tin cậy 95% Bootstrap: `[0.0041, 0.0553]`).
   - **ATE trên RCT-holdout:** `0.00376` (tương đương `0.376` điểm phần trăm).
 - **Ablation & Triển khai Production:**
-  - **41 đặc trưng** ($k=41$) đạt mốc an toàn tuyệt đối khi phục vụ (sai lệch dự đoán CATE = 0).
-  - **36 cột gốc** được lưu lên Redis Feature Store (`so_dac_trung_tu_redis = 36`).
-  - **5 cột dẫn xuất** do AI Service tự tính toán trên fly (`fe_ratio_f1_f2`, `fe_ratio_f14_f16`, `fe_ratio_f9_f27`, `fe_inter_f9_f26`, `fe_nonzero_top10`).
+  - **41 đặc trưng đầu vào sống** ($k=41$) đạt mốc an toàn tuyệt đối khi phục vụ (sai lệch dự đoán CATE = 0); 35 cột còn lại được điền giá trị mặc định.
+  - Trong 41 cột này có 36 cột gốc dùng trực tiếp và 5 cột dẫn xuất do AI Service tính. Khi triển khai, service còn cần 4 cột nguồn `f7`, `f14`, `f17`, `f27` để tính đủ các cột dẫn xuất; vì vậy luồng nguồn cần tổng cộng **40 cột gốc**.
 
 ---
 
 ## ⚡ Hướng dẫn cài đặt & Chạy môi trường với `uv`
 
-Dự án sử dụng **`uv`** (Astral) để quản lý phiên bản Python và khóa các package dependencies, đảm bảo môi trường tái lập 100% trên mọi máy tính.
+Dự án sử dụng **`uv`** (Astral) để quản lý phiên bản Python và khóa package dependency nhất quán giữa các máy.
 
 ### 1. Yêu cầu tiền đề
 - [Git LFS](https://git-lfs.com/) (để tải dữ liệu lớn, file model và database MLflow).
 - [uv](https://docs.astral.sh/uv/getting-started/installation/) (Công cụ quản lý Python siêu tốc).
+
+Cài `uv` trên macOS/Linux nếu máy chưa có:
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
 
 ### 2. Tải repository & Tải file LFS
 ```bash
@@ -49,7 +54,7 @@ uv sync --frozen
 
 ### 4. Kiểm tra nhanh môi trường
 ```bash
-uv run --frozen python -c "import econml, lightgbm, mlflow, optuna, pandas; print('Môi trường OK!')"
+uv run --frozen python -c "import cloudpickle, econml, lightgbm, mlflow, optuna, pandas; print('Môi trường OK!')"
 ```
 
 ---
@@ -80,6 +85,18 @@ uv run --project .. --frozen jupyter lab
 
 *Lưu ý: Notebook 03 ở chế độ `full` chạy mất khoảng 48 phút. Tất cả output và artifacts đã được chạy sẵn và lưu trong repo, không cần chạy lại toàn bộ pipeline chỉ để xem kết quả.*
 
+`rct_holdout` là tập đánh giá cuối đã được mở đúng một lần. Không dùng kết quả trên tập này để tuning lại mô hình hoặc chọn đặc trưng.
+
+### Nạp model đã bàn giao
+
+Chạy từ thư mục gốc của repo:
+
+```bash
+uv run --frozen python -c "import pickle; model = pickle.load(open('artifacts/model.pkl', 'rb')); print(type(model).__name__)"
+```
+
+Artifact dùng `cloudpickle` khi xuất để class `DRLearner` định nghĩa trong notebook vẫn nạp được ở một process hoặc máy khác; phía sử dụng vẫn có thể gọi `pickle.load` như bình thường.
+
 ---
 
 ## 📊 Xem lịch sử thí nghiệm MLflow
@@ -109,7 +126,7 @@ Sau đó truy cập trình duyệt tại địa chỉ: **`http://127.0.0.1:5000`
 ├── mlflow.db               # Database lưu lịch sử thí nghiệm MLflow
 ├── project-information.md  # Sơ đồ phân chia luồng công việc DS và DE
 ├── pyproject.toml          # Khai báo dependency dự án
-├── uv.lock                 # File khóa phiên bản package 100% tái lập
+├── uv.lock                 # File khóa chính xác phiên bản package
 └── .python-version         # Khóa phiên bản Python 3.10.9
 ```
 
