@@ -1,0 +1,85 @@
+% ==============================================================================
+% CHƯƠNG 1: ĐẶT VẤN ĐỀ & BÀI TOÁN KINH DOANH LAZADA
+% File: 02-chuong-1-dat-van-de.tex
+% ==============================================================================
+
+\chapter{Đặt vấn đề \& Bài toán Kinh doanh Lazada}
+
+\section{Thực trạng Chiến dịch Khuyến mãi Thương mại Điện tử}
+
+Trong ngành Thương mại Điện tử (TMĐT) như Lazada, khuyến mãi và mã giảm giá (voucher) là một trong những công cụ quan trọng nhất để kích cầu mua sắm, gia tăng tỉ lệ chuyển đổi (Conversion Rate - CVR) và tăng giá trị tổng hàng hóa giao dịch (GMV). 
+
+Tuy nhiên, bài toán tối ưu hóa chi phí voucher luôn đối mặt với một mâu thuẫn cốt lõi:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Nếu phát voucher tràn lan:} Doanh số có thể tăng nhẹ, nhưng chi phí tài chính sẽ bùng nổ, biên lợi nhuận bị bào mòn nghiêm trọng. Rất nhiều ngân sách bị lãng phí cho những khách hàng vốn dĩ đã có ý định mua hàng từ trước.
+    \item \textbf{Nếu cắt giảm voucher quá tay:} Doanh nghiệp có thể bỏ lỡ những khách hàng tiềm năng — những người thực sự cần một động lực tài chính nhỏ (giảm giá $5\% - 10\%$) để đưa ra quyết định chốt đơn.
+\end{itemize}
+
+Do đó, mục tiêu của bài toán cá nhân hóa khuyến mãi là: \textbf{Chỉ tặng voucher cho đúng những khách hàng mà việc tặng voucher làm thay đổi hành vi của họ từ KHÔNG MUA sang MUA HÀNG.}
+
+\section{Cái bẫy của Mô hình Machine Learning Truyền thống}
+
+Để giải quyết bài toán trên, hướng tiếp cận truyền thống của đa số các đội ngũ Data Science là xây dựng một mô hình Machine Learning dự đoán xác suất mua hàng (Response Model / CVR Model):
+\begin{equation}
+    P(Y = 1 \mid X) = f(X)
+\end{equation}
+Trong đó $X$ là tập các đặc trưng hành vi người dùng, và $Y \in \{0, 1\}$ đại diện cho việc khách hàng có mua hàng hay không. Sau đó, hệ thống sẽ xếp hạng khách hàng theo xác suất mua hàng dự đoán giảm dần và phát voucher cho Top $k\%$ người có xác suất cao nhất.
+
+\begin{mdframed}[linecolor=red,backgroundcolor=codebg,linewidth=1.5pt,roundcorner=5pt]
+\textbf{⚠️ VÌ SAO MÔ HÌNH CVR TRUYỀN THỐNG BỊ THẤT BẠI TRONG MARKETING?}
+
+Mô hình CVR truyền thống chỉ trả lời câu hỏi: \textit{"Khách hàng này có xác suất mua hàng cao hay thấp?"}. Nó \textbf{KHÔNG} trả lời câu hỏi: \textit{"Khách hàng này mua hàng CÓ PHẢI NHỜ VOUCHER HAY KHÔNG?"}.
+
+Khi bạn gửi voucher cho những người có điểm CVR cao nhất, bạn đang vô tình tặng tiền cho những người \textbf{chắc chắn sẽ mua hàng dù có voucher hay không}. Việc này gây ra tình trạng lãng phí ngân sách cực kỳ lớn mà không tạo ra bất kỳ đơn hàng tăng thêm thực sự nào.
+\end{mdframed}
+
+\section{Phân loại 4 Nhóm Khách hàng theo Ma trận Phản ứng}
+
+Để hiểu rõ cơ chế tác động của khuyến mãi, lý thuyết Uplift Modeling phân chia toàn bộ khách hàng trên thị trường thành \textbf{4 nhóm phân khúc hành vi} dựa trên phản ứng của họ khi nhận được điều trị ($W=1$, nhận voucher) so với không nhận điều trị ($W=0$, không nhận voucher):
+
+\begin{table}[h!]
+\centering
+\caption{Ma trận phân loại 4 nhóm khách hàng theo Uplift Modeling}
+\label{tab:matrix_customers}
+\begin{tabular}{@{}k{3.5cm}c{4.5cm}c{4.5cm}@{}}
+\toprule
+ & \textbf{Không nhận Voucher ($W=0$)} & \textbf{Có nhận Voucher ($W=1$)} \\ \midrule
+\textbf{Không mua ($Y=0$)} & \textbf{Lost Causes} (Không mua) & \textbf{Persuadables} (Người nhạy cảm) \\
+\textbf{Có mua ($Y=1$)} & \textbf{Sure Things} (Chắc chắn mua) & \textbf{Sleeping Dogs} (Phản tác dụng) \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Persuadables (Nhóm Khách hàng Nhạy cảm):} 
+    Những người nếu không có voucher thì $Y=0$, nhưng nếu có voucher sẽ chuyển thành $Y=1$. 
+    \textit{$\Rightarrow$ Đây là NHÓM DUY NHẤT mà ngân sách voucher cần tập trung hướng tới!}
+
+    \item \textbf{Sure Things (Nhóm Chắc chắn mua):} 
+    Dù có hay không có voucher họ vẫn mua hàng ($Y(1)=1, Y(0)=1$). 
+    \textit{$\Rightarrow$ Tặng voucher cho nhóm này là LÃNG PHÍ 100\% ngân sách.}
+
+    \item \textbf{Lost Causes (Nhóm Không mua):} 
+    Dù có voucher hay không họ vẫn không mua hàng ($Y(1)=0, Y(0)=0$). 
+    \textit{$\Rightarrow$ Tặng voucher cho nhóm này là LÃNG PHÍ chi phí phát sinh.}
+
+    \item \textbf{Sleeping Dogs (Nhóm Phản tác dụng):} 
+    Nếu không tặng voucher thì họ mua hàng, nhưng nếu tặng voucher họ cảm thấy bị làm phiền hoặc nghi ngờ chất lượng nên KHÔNG MUA HÀNG ($Y(1)=0, Y(0)=1$). 
+    \textit{$\Rightarrow$ Tặng voucher cho nhóm này gây HẠI TRỰC TIẾP tới doanh thu.}
+\end{enumerate}
+
+\section{Sự ra đời của Uplift Modeling \& Chỉ số CATE}
+
+Để khắc phục triệt để nhược điểm của mô hình CVR truyền thống, lĩnh vực \textbf{Causal AI / Uplift Modeling} ra đời. Thay vì dự đoán $P(Y=1 \mid X)$, ta ước lượng trực tiếp \textbf{Conditional Average Treatment Effect (CATE)} — kí hiệu là $\tau(X)$:
+
+\begin{equation}
+    \tau(X) = \mathbb{E}[Y(1) - Y(0) \mid X]
+\end{equation}
+
+Trong đó:
+\begin{itemize}
+    \item $Y(1)$ là kết quả nếu khách hàng nhận voucher ($W=1$).
+    \item $Y(0)$ là kết quả nếu khách hàng không nhận voucher ($W=0$).
+    \item $\tau(X)$ đo lường \textbf{mức độ tăng trưởng chuyển đổi tăng thêm (Incremental Conversion Rate)} do tác động của voucher mang lại cho cá nhân có tập đặc trưng $X$.
+\end{itemize}
+
+Nếu $\tau(X) > 0$, khách hàng thuộc nhóm \textit{Persuadables}. Mục tiêu của dự án là xây dựng và so sánh các phương pháp ước lượng $\tau(X)$ chính xác nhất để tối ưu hóa hiệu quả kinh doanh cho Lazada.

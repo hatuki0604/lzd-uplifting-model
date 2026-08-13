@@ -1,0 +1,181 @@
+% ==============================================================================
+% CHƯƠNG 1: MỤC LỤC CHI TIẾT & TỔNG QUAN ĐỀ TÀI
+% File: 01-muc-luc.tex
+% ==============================================================================
+
+\chapter*{Mục lục Chi tiết \& Khung Nội dung Báo cáo}
+\addcontentsline{toc}{chapter}{Mục lục Chi tiết \& Khung Nội dung Báo cáo}
+
+\begin{mdframed}[linecolor=lazadaorange,backgroundcolor=codebg,linewidth=1.5pt,roundcorner=5pt]
+\textbf{\large 💡 LỜI NÓI ĐẦU \& MỤC TIÊU CỦA TÀI LIỆU BÁO CÁO}
+
+Tài liệu này được biên soạn theo phong cách \textbf{mô phỏng thực tế - diễn giải từ khái niệm cơ bản nhất đến toán học chuyên sâu}, giúp bất kỳ ai (từ Quản lý nghiệp vụ, Data Engineer cho đến Chuyên gia Machine Learning) đều có thể hiểu rõ:
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Tại sao} mô hình dự đoán truyền thống lại thất bại trong bài toán khuyến mãi?
+    \item \textbf{Bản chất toán học} của Causal AI, Doubly Robust Estimators và Double Machine Learning (DML) là gì?
+    \item \textbf{Quy trình thực nghiệm 4 bước} được triển khai chuẩn mực ra sao qua 4 Notebooks?
+    \item \textbf{Kết quả thực nghiệm} đạt được và cách đóng gói bàn giao hệ thống MLOps ra thực tế.
+\end{enumerate}
+\end{mdframed}
+
+\vspace{0.5cm}
+
+% ==============================================================================
+% TỔNG QUAN KHUNG CẤU TRÚC BÁO CÁO (SITEMAP)
+% ==============================================================================
+\section*{Sơ đồ Cấu trúc Báo cáo Chuyên sâu (6 Chương)}
+
+Báo cáo được chia thành \textbf{6 Chương nội dung chính}, đi từ bài toán thực tế Lazada đến toán học chuyên sâu và đóng gói hạ tầng MLOps:
+
+\begin{description}[leftmargin=1.5cm, style=nextline]
+    \item[\textbf{Chương 1: Đặt vấn đề \& Bài toán Kinh doanh Lazada (Business Context)}]
+    Giải thích từ khái niệm cơ bản nhất: Vì sao mô hình Machine Learning truyền thống (CVR) gây lãng phí hàng tỷ đồng tiền voucher? Định nghĩa 4 nhóm khách hàng (\textit{Persuadables, Sleeping Dogs, Lost Causes, Sure Things}) và sự ra đời của Uplift Modeling / CATE.
+
+    \item[\textbf{Chương 2: Cơ sở Lý thuyết Causal Inference \& Doubly Robust Estimators}]
+    Xây dựng nền tảng toán học nghiêm ngặt: Khung lý thuyết Potential Outcomes ($Y(1), Y(0)$), Thiên vị chọn lọc (Confounding Bias), 3 Giả định sống còn (Unconfoundedness, Positivity, SUTVA), Công thức Doubly Robust Pseudo-outcome (Kennedy 2020), Neyman-Orthogonality và kỹ thuật 5-Fold Cross-Fitting.
+
+    \item[\textbf{Chương 3: Các Họ Mô hình CATE trong Đề tài (Model Zoo)}]
+    Phân tích chuyên sâu 6 mô hình thuật toán được đưa vào đấu trường thực nghiệm: S-Learner, T-Learner, DR-Learner và bộ 3 mô hình DML từ Microsoft EconML (LinearDML, NonParamDML, CausalForestDML).
+
+    \item[\textbf{Chương 4: Quy trình Thực nghiệm 4 Bước (Pipeline 4 Notebooks)}]
+    Trình bày chi tiết từng bước xử lý dữ liệu và huấn luyện qua 4 Notebooks: Sơ đồ chia dữ liệu Stratified (NB01), Kỹ nghệ đặc trưng \& Overlap check (NB02), Optuna Tuning với hàm mục tiêu DR-AUUC \& Winsorizing (NB03), và Benchmark Retrain 926k dòng (NB04).
+
+    \item[\textbf{Chương 5: Kết quả Thực nghiệm \& Đánh giá Benchmark (Empirical Results)}]
+    Trình bày bảng benchmark chính thức, kết quả kiểm định trên tập niêm phong \texttt{rct\_holdout}, Ablation Study chọn số đặc trưng tối ưu ($k=41$), Mô phỏng chính sách (Policy Simulation) và Phân tích đặc trưng nhóm Persuadables.
+
+    \item[\textbf{Chương 6: Đóng gói Bàn giao \& Hạ tầng MLOps (Deployment \& Architecture)}]
+    Thiết kế Hợp đồng đặc trưng (Feature Contract 41 đặc trưng / 36 cột gốc Redis), hạ tầng quản lý môi trường $100\%$ tái lập với \texttt{uv}, Nhật ký thí nghiệm MLflow và Kiến trúc phối hợp DS - DE.
+\end{description}
+
+\newpage
+
+% ==============================================================================
+% CHI TIẾT TỪNG CHƯƠNG NỘI DUNG (DETAILED TOC)
+% ==============================================================================
+\section*{Chi tiết Nội dung Từng Chương}
+
+\subsection*{CHƯƠNG 1: Đặt vấn đề \& Bài toán Kinh doanh Lazada}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{1.1. Thực trạng chiến dịch khuyến mãi TMĐT:} Bài toán phát voucher tối ưu lợi nhuận tại Lazada.
+    \item \textbf{1.2. Cái bẫy của Machine Learning truyền thống (CVR Model):} 
+    \begin{*itemize}
+        \item Khái niệm Response Model ($Y \sim X$).
+        \item Lý do mô hình CVR chỉ tìm người có khả năng mua cao nhất (vốn dĩ tự mua mà không cần voucher), dẫn đến lãng phí ngân sách.
+    \end{*itemize}
+    \item \textbf{1.3. Phân loại 4 nhóm khách hàng theo Phản ứng Điều trị (Treatment Behavior):}
+    \begin{enumerate}
+        \item \textbf{Persuadables (Người nhạy cảm):} Chỉ mua KHI CÓ voucher. (Đối tượng duy nhất cần tặng).
+        \item \textbf{Sure Things (Người chắc chắn mua):} Có hay không có voucher VẪN MUA. (Tặng = Lãng phí).
+        \item \textbf{Lost Causes (Người không mua):} Có hay không có voucher VẪN KHÔNG MUA. (Tặng = Lãng phí).
+        \item \textbf{Sleeping Dogs (Khách hàng phản tác dụng):} Không có voucher thì mua, CÓ voucher lại KHÔNG MUA. (Tặng = Hại doanh thu).
+    \end{enumerate}
+    \item \textbf{1.4. Định nghĩa Uplift Modeling \& CATE (Conditional Average Treatment Effect):}
+    \begin{equation*}
+        \tau(X) = \mathbb{E}[Y(1) - Y(0) \mid X]
+    \end{equation*}
+\end{itemize}
+
+\subsection*{CHƯƠNG 2: Cơ sở Lý thuyết Causal Inference \& Doubly Robust Estimators}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{2.1. Khung lý thuyết Potential Outcomes (Neyman-Rubin Causal Model):}
+    \begin{*itemize}
+        \item Định nghĩa $Y(1)$ (Kết quả nếu nhận voucher) và $Y(0)$ (Kết quả nếu không nhận).
+        \item Vấn đề cơ bản của Suy luận Nhân quả (Fundamental Problem of Causal Inference): Chỉ quan sát được $Y = W \cdot Y(1) + (1-W) \cdot Y(0)$.
+    \end{*itemize}
+    \item \textbf{2.2. Thiên vị chọn lọc (Confounding Bias) trong Dữ liệu Quan sát:}
+    \begin{*itemize}
+        \item Tại sao $ATE_{\text{ngây thơ}} = \bar{Y}_{W=1} - \bar{Y}_{W=0}$ bị sai lệch gấp 10 lần?
+        \item Đo lường thiên vị qua chỉ số Standardized Mean Difference (SMD).
+    \end{*itemize}
+    \item \textbf{2.3. Ba giả định sống còn của Suy luận Nhân quả:}
+    \begin{enumerate}
+        \item Unconfoundedness / Ignorability: $(Y(1), Y(0)) \perp W \mid X$.
+        \item Positivity / Overlap: $0 < e(X) = P(W=1 \mid X) < 1$.
+        \item SUTVA (Stable Unit Treatment Value Assumption).
+    \end{enumerate}
+    \item \textbf{2.4. Công thức Doubly Robust Pseudo-outcome (Kennedy 2020):}
+    \begin{equation*}
+        \tilde{\Gamma}_i = \hat{\mu}_1(X_i) - \hat{\mu}_0(X_i) + \frac{W_i (Y_i - \hat{\mu}_1(X_i))}{\hat{e}(X_i)} - \frac{(1-W_i)(Y_i - \hat{\mu}_0(X_i))}{1 - \hat{e}(X_i)}
+    \end{equation*}
+    \item \textbf{2.5. Nguyên lý Neyman-Orthogonality \& Kỹ thuật 5-Fold Cross-Fitting (Chernozhukov 2018):} Cơ chế chống overfitting cho các mô hình phụ ($\hat{e}, \hat{\mu}_0, \hat{\mu}_1$).
+\end{itemize}
+
+\subsection*{CHƯƠNG 3: Các Họ Mô hình CATE trong Đề tài (Model Zoo)}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{3.1. Phân loại các họ thuật toán CATE:} Meta-Learners vs Double Machine Learning (DML).
+    \item \textbf{3.2. S-Learner (Single Model):} Mô hình gộp $Y \sim f(X, W)$. Điểm mạnh, điểm yếu (bị chèn ép biến $W$).
+    \item \textbf{3.3. T-Learner (Two Models):} Hai mô hình riêng cho 2 nhóm $f_1(X)$ và $f_0(X)$. Vấn đề nổ phương sai khi mẫu không đều.
+    \item \textbf{3.4. DR-Learner (Kennedy 2020):} Thuật toán 2 tầng (Stage 1 tính DR-score $\tilde{\Gamma}$, Stage 2 hồi quy $\tilde{\Gamma} \sim X$).
+    \item \textbf{3.5. Bộ ba mô hình DML từ Microsoft EconML:}
+    \begin{*itemize}
+        \item \textbf{LinearDML:} Tầng cuối tuyến tính, giải thích hệ số dễ dàng.
+        \item \textbf{NonParamDML:} Tầng cuối phi tham số (LightGBM), bắt quan hệ phi tuyến phức tạp.
+        \item \textbf{CausalForestDML:} Rừng nhân quả (Causal Random Forest) với Honest Splitting.
+    \end{*itemize}
+\end{itemize}
+
+\subsection*{CHƯƠNG 4: Quy trình Thực nghiệm 4 Bước (Notebooks Pipeline)}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{4.1. Notebook 01 — Khảo sát \& Sơ đồ phân chia dữ liệu (EDA \& Split Scheme):}
+    \begin{*itemize}
+        \item Thiết kế chia dữ liệu Stratified theo tổ hợp $(is\_treat \times label)$.
+        \item Bốn tập phân chia: \texttt{train} (741k), \texttt{val} (185k), \texttt{rct\_select} (90k), \texttt{rct\_holdout} (90k).
+        \item Niêm phong tuyệt đối tập \texttt{val} và \texttt{rct\_holdout} để chống Data Leakage.
+    \end{*itemize}
+    \item \textbf{4.2. Notebook 02 — Kỹ nghệ Đặc trưng \& Kiểm tra Overlap:}
+    \begin{*itemize}
+        \item Làm sạch: Bỏ cột hằng số và cột trùng lặp thông tin.
+        \item Tạo 3 nhóm đặc trưng mới (Tỉ lệ tương quan, Interaction, Row-wise Aggregates).
+        \item Kiểm tra giả định Positivity với mô hình Propensity Score.
+    \end{*itemize}
+    \item \textbf{4.3. Notebook 03 — Tinh chỉnh Tham số Optuna \& MLflow Tracking:}
+    \begin{*itemize}
+        \item Sub-sampling 200k (Tune) + 100k (Val) để tuning nhanh.
+        \item Đổi hàm mục tiêu Optuna sang **DR-AUUC (DR-Qini)** chuẩn hóa.
+        \item Trim vùng Overlap theo quy tắc **Crump (2009)** ($[0.02, 0.10]$) \& Winsorizing DR-score ở 0.5\% / 99.5\%.
+        \item Kiểm tra khả năng mang sang RCT (Transportability Z-test \& MDD).
+    \end{*itemize}
+    \item \textbf{4.4. Notebook 04 — Benchmark Evaluation \& Ablation Study:}
+    \begin{*itemize}
+        \item Thước đo Qini Score, AUUC, ATE + Khoảng tin cậy Bootstrap 95\% (1.000 lần).
+        \item Bốn phép thử ngược (Sanity Checks) kiểm chứng công thức trước khi chấm điểm.
+        \item Full Re-train 6 mô hình trên 926.669 dòng dữ liệu quan sát.
+        \item Đấu mô hình trên \texttt{rct\_select} tìm Quán quân (\textbf{DR-Learner}).
+        \item Ablation study quét số đặc trưng $k$, chốt $k=41$ đặc trưng đầu vào (36 cột gốc Redis).
+        \item Đánh giá 1 lần duy nhất trên tập niêm phong \texttt{rct\_holdout}.
+    \end{*itemize}
+\end{itemize}
+
+\subsection*{CHƯƠNG 5: Kết quả Thực nghiệm \& Đánh giá Benchmark}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{5.1. Bảng xếp hạng Benchmark chính thức trên tập RCT-holdout:}
+    \begin{*itemize}
+        \item So sánh Qini, AUUC, ATE, Uplift@10\%, Uplift@20\%, Uplift@30\%.
+        \item Qini của Quán quân DR-Learner: \textbf{0.0291} [0.0041, 0.0553].
+    \end{*itemize}
+    \item \textbf{5.2. Phân tích Feature Importance (DR-Learner Gain):} Danh sách Top 20 đặc trưng quyết định hiệu ứng điều trị.
+    \item \textbf{5.3. Kết quả Ablation Study:} Bằng chứng thực nghiệm chọn $k=41$ đặc trưng (sai lệch dự đoán CATE = 0).
+    \item \textbf{5.4. Mô phỏng Chính sách (Policy Simulation):} Đánh giá hiệu quả kinh doanh khi cắt giảm $50\% - 70\%$ ngân sách voucher.
+    \item \textbf{5.5. Phân tích Chân dung nhóm Persuadables:} So sánh đặc trưng nhóm nhạy cảm với phần còn lại.
+\end{itemize}
+
+\subsection*{CHƯƠNG 6: Đóng gói Bàn giao \& Hạ tầng MLOps}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{6.1. Thiết kế Hợp đồng Đặc trưng (Feature Contract):}
+    \begin{*itemize}
+        \item Phân bổ 41 đặc trưng sống: 36 cột gốc từ Redis Feature Store + 5 cột dẫn xuất do AI Service tự tính trên fly.
+        \item Bảng tham chiếu giá trị mặc định (Median) cho 35 cột không mang lên Redis.
+    \end{*itemize}
+    \item \textbf{6.2. Quản lý Môi trường Tái lập $100\%$ với \texttt{uv}:}
+    \begin{*itemize}
+        \item Khóa phiên bản Python 3.10.9 trong \texttt{.python-version}.
+        \item Khóa cứng phiên bản thư viện trong \texttt{pyproject.toml} và \texttt{uv.lock}.
+    \end{*itemize}
+    \item \textbf{6.3. Nhật ký Thí nghiệm MLflow (`mlflow.db`):} Quản lý 66 runs thử nghiệm.
+    \item \textbf{6.4. Kiến trúc Phối hợp DS - DE (System Integration):} Sơ đồ luồng bàn giao từ Artifacts (\texttt{model.pkl}, \texttt{metadata.json}) đến FastAPI Service, Redis Store và Model Loader.
+\end{itemize}
+
+\vspace{1cm}
+\begin{center}
+    \textit{--- Hết Chương 1: Sơ đồ Mục lục Chi tiết ---}
+\end{center}

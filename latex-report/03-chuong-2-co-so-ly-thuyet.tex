@@ -1,0 +1,103 @@
+% ==============================================================================
+% CHƯƠNG 2: CƠ SỞ LÝ THUYẾT CAUSAL INFERENCE & DOUBLY ROBUST ESTIMATORS
+% File: 03-chuong-2-co-so-ly-thuyet.tex
+% ==============================================================================
+
+\chapter{Cơ sở Lý thuyết Causal Inference \& Doubly Robust Estimators}
+
+\section{Khung Lý thuyết Potential Outcomes (Neyman-Rubin Model)}
+
+Để đặt nền móng toán học cho bài toán, ta áp dụng khung lý thuyết \textbf{Potential Outcomes} do Neyman (1923) và Rubin (1974) phát triển.
+
+Cho mỗi cá nhân $i$ trong quần thể:
+\begin{itemize}[leftmargin=*]
+    \item $X_i \in \mathbb{R}^d$: Vectơ đặc trưng hành vi và lịch sử tương tác của khách hàng $i$.
+    \item $W_i \in \{0, 1\}$: Biến điều trị (Treatment Indicator). $W_i = 1$ nếu phát voucher, $W_i = 0$ nếu không phát.
+    \item $Y_i(1) \in \{0, 1\}$: Kết quả mua hàng tiềm năng NẾU khách hàng $i$ nhận voucher.
+    \item $Y_i(0) \in \{0, 1\}$: Kết quả mua hàng tiềm năng NẾU khách hàng $i$ không nhận voucher.
+\end{itemize}
+
+\begin{mdframed}[linecolor=lazadablue,backgroundcolor=codebg,linewidth=1.5pt,roundcorner=5pt]
+\textbf{❗ VẤN ĐỀ CƠ BẢN CỦA SUY LUẬN NHÂN QUẢ (Fundamental Problem of Causal Inference)}
+
+Với bất kỳ khách hàng $i$ nào tại một thời điểm, ta \textbf{CHỈ QUAN SÁT ĐƯỢC MỘT TRONG HAI} kết quả tiềm năng. Ta không thể vừa phát voucher vừa không phát voucher cho cùng 1 người tại cùng 1 giây:
+\begin{equation}
+    Y_i = W_i \cdot Y_i(1) + (1 - W_i) \cdot Y_i(0)
+\end{equation}
+Kết quả tiềm năng còn lại bị ẩn đi được gọi là \textbf{Counterfactual} (Thực tế đối lập).
+\end{mdframed}
+
+\section{Thiên vị Chọn lọc (Confounding Bias) trên Dữ liệu Quan sát}
+
+Trong dữ liệu quan sát lịch sử vận hành của Lazada (\texttt{full\_trainset.csv}), voucher **không được phát ngẫu nhiên**. Thuật toán hệ thống cũ thường ưu tiên gửi voucher cho những người dùng tích cực hơn (những người truy cập ứng dụng thường xuyên, có nhiều lượt xem sản phẩm).
+
+Dẫn đến hiện tượng **Yếu tố lây nhiễm / Thiên vị chọn lọc (Confounding / Selection Bias)**: Tập hợp đặc trưng $X$ vừa ảnh hưởng tới quyết định nhận voucher $W$, vừa ảnh hưởng trực tiếp tới khả năng mua hàng $Y$.
+
+Nếu ta tính hiệu ứng điều trị trung bình (ATE) ngây thơ bằng cách lấy trung bình nhóm $W=1$ trừ nhóm $W=0$:
+\begin{equation}
+    \text{ATE}_{\text{ngây thơ}} = \mathbb{E}[Y \mid W=1] - \mathbb{E}[Y \mid W=0]
+\end{equation}
+Con số này sẽ bị sai lệch nghiêm trọng. Thực tế ở Notebook 01 cho thấy: $\text{ATE}_{\text{ngây thơ}} = 4.72\%$, trong khi hiệu ứng thực sự trên dữ liệu thử nghiệm ngẫu nhiên (RCT) chỉ đạt khoảng $\approx 0.37\%$. Đo lường mức độ thiên vị giữa 2 nhóm qua chỉ số **Standardized Mean Difference (SMD)**:
+\begin{equation}
+    \text{SMD}(X^{(j)}) = \frac{\bar{X}^{(j)}_{W=1} - \bar{X}^{(j)}_{W=0}}{\sqrt{\frac{s_{W=1}^2 + s_{W=0}^2}{2}}}
+\end{equation}
+Nếu $|\text{SMD}| > 0.25$, đặc trưng đó bị lệch nghiêm trọng và bắt buộc phải hiệu chỉnh nhân quả.
+
+\section{Ba Giả định Sống còn của Suy luận Nhân quả}
+
+Để ước lượng được $\tau(X)$ từ dữ liệu quan sát, ta bắt buộc phải thỏa mãn 3 giả định:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Giả định Không bị nhiễu ẩn (Unconfoundedness / Ignorability):}
+    \begin{equation}
+        (Y(1), Y(0)) \perp W \mid X
+    \end{equation}
+    Nghĩa là khi đã kiểm soát toàn bộ các đặc trưng $X$, việc một người có nhận voucher hay không trở nên hoàn toàn ngẫu nhiên.
+
+    \item \textbf{Giả định Chồng lấn / Tương thích (Positivity / Overlap):}
+    \begin{equation}
+        0 < e(X) \equiv P(W=1 \mid X) < 1, \quad \forall X
+    \end{equation}
+    Mọi khách hàng có đặc trưng $X$ đều phải có xác suất nhận voucher $\hat{e}(X)$ nằm trong khoảng $(0, 1)$, không có ai chắc chắn $100\%$ nhận hoặc $0\%$ nhận.
+
+    \item \textbf{Giả định Giá trị Điều trị Độc lập (SUTVA):}
+    Việc phát voucher cho khách hàng $A$ không làm ảnh hưởng tới hành vi mua hàng của khách hàng $B$.
+\end{enumerate}
+
+\section{Công thức Doubly Robust Pseudo-outcome (Kennedy 2020)}
+
+Để triệt tiêu thiên vị chọn lọc, phương pháp **Doubly Robust (DR)** xây dựng một biến kết quả giả định (Pseudo-outcome) $\tilde{\Gamma}_i$ cho từng cá nhân $i$:
+
+\begin{equation}
+    \tilde{\Gamma}_i = \hat{\mu}_1(X_i) - \hat{\mu}_0(X_i) + \frac{W_i (Y_i - \hat{\mu}_1(X_i))}{\hat{e}(X_i)} - \frac{(1-W_i)(Y_i - \hat{\mu}_0(X_i))}{1 - \hat{e}(X_i)}
+\end{equation}
+
+Trong đó:
+\begin{itemize}
+    \item $\hat{e}(X) = P(W=1 \mid X)$ là mô hình Propensity Score (xác suất nhận voucher).
+    \item $\hat{\mu}_1(X) = \mathbb{E}[Y \mid X, W=1]$ là mô hình kết quả nhóm nhận voucher.
+    \item $\hat{\mu}_0(X) = \mathbb{E}[Y \mid X, W=0]$ là mô hình kết quả nhóm không nhận voucher.
+\end{itemize}
+
+\begin{mdframed}[linecolor=lazadaorange,backgroundcolor=codebg,linewidth=1.5pt,roundcorner=5pt]
+\textbf{⭐ TÍNH CHẤT DOUBLY ROBUST (ĐỘ BỀN KÉP)}
+
+Kỳ vọng của pseudo-outcome thỏa mãn:
+\begin{equation}
+    \mathbb{E}[\tilde{\Gamma}_i \mid X_i] = \tau(X_i) + O\left(\|\hat{e} - e\| \cdot \|\hat{\mu} - \mu\|\right)
+\end{equation}
+\textbf{Ý nghĩa:} Ước lượng CATE $\hat{\tau}(X)$ sẽ không bị chệch nếu **ÍCH NHẤT 1 TRONG 2 MÔ HÌNH** ($\hat{e}(X)$ hoặc $\hat{\mu}(X)$) được ước lượng đúng! Sai số của CATE chỉ là tích sai số của 2 mô hình phụ.
+\end{mdframed}
+
+\section{Neyman-Orthogonality \& Kỹ thuật 5-Fold Cross-Fitting}
+
+Nếu ta tính $\tilde{\Gamma}_i$ bằng mô hình phụ được huấn luyện trên chính dữ liệu đó, các mô hình phụ sẽ bị quá khớp (overfitting) làm cho $\tilde{\Gamma}_i$ bị lệch nghiêm trọng.
+
+Để giải quyết, ta áp dụng kỹ thuật **Cross-Fitting (Chernozhukov et al. 2018)**:
+\begin{enumerate}
+    \item Chia tập dữ liệu thành $K = 5$ phần (folds) bằng nhau.
+    \item Với mỗi fold $k \in \{1, \dots, 5\}$: Dùng $4$ folds còn lại để huấn luyện 3 mô hình phụ ($\hat{e}, \hat{\mu}_0, \hat{\mu}_1$).
+    \item Dùng 3 mô hình phụ này để dự đoán và tính $\tilde{\Gamma}_i$ cho duy nhất fold $k$.
+\end{enumerate}
+
+Kỹ thuật này đảm bảo tính **Neyman-Orthogonality**, giúp loại bỏ hoàn bộ sai số bậc nhất từ các mô hình phụ lên ước lượng CATE cuối cùng.

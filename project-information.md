@@ -30,7 +30,7 @@ flowchart TD
         B --> C["3. Feature Engineering<br/>loại cột hằng số & trùng lặp"]
         C --> D["4. Data Split<br/>Train 80% / Val 20%<br/>RCT-select 50% / RCT-holdout 50%"]
         D --> E["5. CATE Modeling<br/>DR-Learner · LinearDML · NonParamDML<br/>CausalForestDML + baseline S/T-Learner"]
-        E --> F["6. Hyperparameter Tuning trên Val<br/>metric: DR-score"]
+        E --> F["6. Hyperparameter Tuning trên Val<br/>metric: DR-AUUC trên vùng overlap"]
         F --> G["7. MLflow Tracking<br/>~70 run, log đủ params + metrics"]
         G --> H["8. Chọn Best Model<br/>đấu trên RCT-select"]
         H --> I["9. Đánh giá cuối trên RCT-holdout<br/>AUUC · Qini · ATE+CI · Policy Simulation"]

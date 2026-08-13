@@ -1,0 +1,81 @@
+% ==============================================================================
+% CHƯƠNG 3: CÁC HỌ MÔ HÌNH CATE TRONG ĐỀ TÀI (MODEL ZOO)
+% File: 04-chuong-3-mo-hinh-cate.tex
+% ==============================================================================
+
+\chapter{Các Họ Mô hình CATE trong Đề tài (Model Zoo)}
+
+\section{Phân loại các Họ Mô hình CATE}
+
+Đề tài tiến hành đánh giá thực nghiệm **6 mô hình CATE** đại diện cho 2 trường phái kiến trúc chính trong Causal AI:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Trường phái Meta-Learners:} Các mô hình bọc (meta-algorithms) sử dụng thuật toán Machine Learning chuẩn (như LightGBM) làm nền tảng để gián tiếp hoặc trực tiếp ước lượng CATE. Gồm: \textit{S-Learner, T-Learner, DR-Learner}.
+    \item \textbf{Trường phái Double Machine Learning (DML):} Khung làm việc dựa trên lý thuyết Neyman-Orthogonality phát triển bởi Chernozhukov et al. (2018) và triển khai qua thư viện **Microsoft EconML**. Gồm: \textit{LinearDML, NonParamDML, CausalForestDML}.
+\end{enumerate}
+
+Tất cả 6 mô hình được chuẩn hóa chung một giao diện lập trình Python: \texttt{fit(X, W, Y)} và \texttt{predict\_cate(X)}.
+
+\section{Mô hình Baseline 1: S-Learner (Single Model)}
+
+\textbf{Ý tưởng cốt lõi:} Huấn luyện **1 mô hình Machine Learning duy nhất** $f(X, W)$ để dự đoán trực tiếp kết quả mua hàng $Y$, trong đó biến điều trị $W$ được đưa vào như một cột đặc trưng đầu vào bình thường cùng với $X$.
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Huấn luyện:} $Y \sim f(X, W)$ sử dụng LightGBM Regressor.
+    \item \textbf{Dự đoán CATE:}
+    \begin{equation}
+        \hat{\tau}_{\text{S-Learner}}(X) = f(X, 1) - f(X, 0)
+    \end{equation}
+    \item \textbf{Nhược điểm cốt lõi:} Khi không gian đặc trưng $X$ có chiều dữ liệu lớn ($76$ đặc trưng), thuật toán mô hình cây thường ngó lơ biến nhị phân $W$ (chỉ chiếm $1/77$ thuộc tính). Dẫn đến dự đoán CATE $\hat{\tau}(X)$ bị co cụm về $0$.
+\end{itemize}
+
+\section{Mô hình Baseline 2: T-Learner (Two Models)}
+
+\textbf{Ý tưởng cốt lõi:} Tách biệt dữ liệu và huấn luyện **2 mô hình độc lập**: một mô hình $f_1(X)$ cho nhóm nhận voucher ($W=1$) và một mô hình $f_0(X)$ cho nhóm không nhận voucher ($W=0$).
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Huấn luyện:} 
+    \begin{equation}
+        Y^{(1)} \sim f_1(X) \quad \text{trên tập } \{X_i \mid W_i=1\}, \qquad Y^{(0)} \sim f_0(X) \quad \text{trên tập } \{X_i \mid W_i=0\}
+    \end{equation}
+    \item \textbf{Dự đoán CATE:}
+    \begin{equation}
+        \hat{\tau}_{\text{T-Learner}}(X) = f_1(X) - f_0(X)
+    \end{equation}
+    \item \textbf{Nhược điểm cốt lõi:} Hai mô hình $f_1$ và $f_0$ được học độc lập nên không tối ưu hóa trực tiếp cho hiệu $f_1 - f_0$. Nếu kích thước mẫu 2 nhóm bị lệch nặng, phương sai của CATE sẽ bị nổ rất lớn.
+\end{itemize}
+
+\section{Mô hình Nhân vật chính 1: DR-Learner (Kennedy 2020)}
+
+\textbf{Ý tưởng cốt lõi:} Mô hình 2 tầng (Two-stage) kết hợp tính chất Doubly Robust.
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Tầng 1 (Stage 1):} Sử dụng 5-fold cross-fitting để ước lượng 3 mô hình phụ ($\hat{e}(X), \hat{\mu}_0(X), \hat{\mu}_1(X)$) và xây dựng biến pseudo-outcome $\tilde{\Gamma}_i$.
+    \item \textbf{Tầng 2 (Stage 2):} Huấn luyện một mô hình LightGBM Regressor thứ hai để hồi quy trực tiếp pseudo-outcome $\tilde{\Gamma}_i$ theo không gian đặc trưng $X_i$:
+    \begin{equation}
+        \tilde{\Gamma}_i \sim g(X_i) \implies \hat{\tau}_{\text{DR-Learner}}(X) = g(X)
+    \end{equation}
+    \item \textbf{Ưu điểm vượt trội:} Trực tiếp tối ưu hóa CATE, có tính bền bỉ kép (Doubly Robust) và tốc độ huấn luyện/dự đoán cực nhanh.
+\end{itemize}
+
+\section{Bộ ba Mô hình DML từ Microsoft EconML}
+
+Phương pháp Double Machine Learning thực hiện bóc tách phần dư (Partial-out residualization) để loại bỏ tác động của $X$ ra khỏi cả $W$ và $Y$:
+\begin{equation}
+    \tilde{Y} = Y - \hat{\mu}(X), \qquad \tilde{W} = W - \hat{e}(X)
+\end{equation}
+Sau đó hồi quy $\tilde{Y}$ theo $\tilde{W}$ và $X$. Đề tài thử nghiệm 3 biến thể tầng cuối khác nhau:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{LinearDML (\texttt{econml.dml.LinearDML}):}
+    Tầng cuối áp dụng hồi quy tuyến tính (Linear Regression) trên $\tilde{W}$. 
+    \textit{Ưu điểm:} Hệ số đơn giản, dễ giải thích. \textit{Nhược điểm:} Giới hạn trong mối quan hệ tuyến tính.
+
+    \item \textbf{NonParamDML (\texttt{econml.dml.NonParamDML}):}
+    Tầng cuối áp dụng mô hình phi tham số (LightGBM Regressor). 
+    \textit{Ưu điểm:} Bắt được các mặt CATE phi tuyến tính phức tạp.
+
+    \item \textbf{CausalForestDML (\texttt{econml.dml.CausalForestDML}):}
+    Tầng cuối sử dụng **Rừng Nhân quả (Causal Random Forest)** phát triển bởi Wager \& Athey (2018).
+    \textit{Ưu điểm:} Áp dụng kỹ thuật chia nhánh trung thực (\textit{Honest Splitting}) cho phép xây dựng khoảng tin cậy thống kê chuẩn xác cho từng cá nhân. \textit{Nhược điểm:} Tốn nhiều tài nguyên bộ nhớ và thời gian tính toán nhất.
+\end{enumerate}

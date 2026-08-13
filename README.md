@@ -80,12 +80,36 @@ uv run --project .. --frozen jupyter lab
 |---|---|---|
 | **`01_eda.ipynb`** | EDA, kiểm tra bias/overlap, chia dữ liệu phân tầng cố định | `split_assignment.parquet`, `eda_columns_to_drop.json` |
 | **`02_feature_engineering.ipynb`** | Làm sạch, bỏ cột trùng/hằng số, tạo 3 nhóm đặc trưng mới, xuất 4 tập Parquet | `train/val/rct_select/rct_holdout.parquet`, `feature_info.json` |
-| **`03_model_tuning.ipynb`** | Sub-sampling 200k/100k, Optuna tuning 6 mô hình CATE, log MLflow | `best_params.json`, `mlflow.db` |
+| **`03_model_tuning.ipynb`** | Sub-sampling 200k/100k, xử lý overlap (trim theo Crump) + winsorize, Optuna tuning 6 mô hình CATE theo **DR-AUUC**, bootstrap KTC, log MLflow | `best_params.json`, `mlflow.db` |
 | **`04_benchmark_evaluation.ipynb`** | Full re-train 926k dòng, đấu trên `rct_select`, Ablation study, đánh giá `rct_holdout`, đóng gói bàn giao | `model.pkl`, `model_full.pkl`, `metadata.json`, `feature_contract.json` |
 
 *Lưu ý: Notebook 03 ở chế độ `full` chạy mất khoảng 48 phút. Tất cả output và artifacts đã được chạy sẵn và lưu trong repo, không cần chạy lại toàn bộ pipeline chỉ để xem kết quả.*
 
 `rct_holdout` là tập đánh giá cuối đã được mở đúng một lần. Không dùng kết quả trên tập này để tuning lại mô hình hoặc chọn đặc trưng.
+
+### Thước đo tinh chỉnh ở notebook 03
+
+Bản đầu dùng **DR-MSE** làm hàm mục tiêu Optuna. Nó hỏng: khai triển ra thì
+
+```
+E[(τ̂ − Ỹ)²] = E[(τ̂ − τ)²]  +  E[Var(Ỹ | X)]
+                ↑ thứ cần đo      ↑ hằng số, giống nhau ở mọi mô hình
+```
+
+Số hạng thứ hai không phụ thuộc mô hình nhưng lớn hơn số hạng đầu vài trăm lần, nên nó nuốt mất tín hiệu — sáu mô hình cho DR-MSE nằm trong `0,3231 – 0,3238` với mốc dự đoán hằng số `0,3234` nằm lọt giữa.
+
+Bản hiện tại sửa bốn chỗ, theo nhận xét của mentor:
+
+| # | Thay đổi | Chi tiết |
+|---|---|---|
+| 1 | **Xử lý overlap** | Trim hẳn vùng ngoài chồng lấn thay vì chỉ cắt `ê`. Ngưỡng `α` **không gõ tay** mà tính theo quy tắc Crump et al. (2009), có hàng rào `[0,02 – 0,10]` chặn hai đầu |
+| 2 | **Winsorize** `Ỹ` ở phân vị 0,5% / 99,5% | Tách bạch `dr_ov` (chưa winsorize — dùng báo cáo **mức** ATE) và `dr_val` (đã winsorize — dùng làm nhãn **xếp hạng**) |
+| 3 | **Hàm mục tiêu → DR-AUUC** | Sắp theo `τ̂`, lấy trung bình tích lũy của `Ỹ`, tính diện tích trên đường chéo, chuẩn hóa về thang 0–1 như hệ số Qini. Hướng đổi thành `maximize` |
+| 4 | **Bootstrap theo cặp** | Chỉ tuyên bố A hơn B khi KTC 95% của *hiệu* `Qini_DR(A) − Qini_DR(B)` không chứa 0 |
+
+**Estimand đã đổi** kèm theo thay đổi 1: thước đo ở notebook 03 nhắm vào `E[τ(X) | α ≤ e(X) ≤ 1−α]` — ATE trên **vùng overlap** của Val, không phải trên toàn quần thể Val. Notebook 03 phát biểu lại điều này ở Bước 10 và ghi vào `xu_ly_overlap.estimand` trong `best_params.json`.
+
+Notebook 04 đọc `xu_ly_overlap.propensity_alpha` từ file đó để dùng đúng ngưỡng cắt `ê` mà notebook 03 đã tinh chỉnh. Trên tập RCT việc phát voucher là ngẫu nhiên (`e ≡ 0,5`) nên không cần trim, và quyết định quán quân vẫn thuộc về hệ số Qini đo ở đó.
 
 ### Nạp model đã bàn giao
 
