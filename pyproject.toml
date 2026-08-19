@@ -18,6 +18,11 @@ dependencies = [
     "seaborn==0.13.2",
 ]
 
+[project.optional-dependencies]
+demo = [
+    "streamlit>=1.59,<2",
+]
+
 [dependency-groups]
 dev = [
     "ipykernel==7.3.0",
