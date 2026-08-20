@@ -1,0 +1,67 @@
+{
+  "quan_quan": "DRLearner",
+  "tap_ra_quyet_dinh": "rct_select",
+  "n": 90834,
+  "seed": 42,
+  "run_mode": "full",
+  "thoi_diem": "2026-08-20 01:53:14",
+  "ma_bam_quyet_dinh_04b": "3960fbe51566cb1a",
+  "qini": 0.027444139283190658,
+  "auuc": 0.029608325581993666,
+  "ate_rct_select": {
+    "ate": 0.0037187915667810864,
+    "se": 0.001221426755361183,
+    "ci_thap": 0.0013247951262731678,
+    "ci_cao": 0.006112788007289005,
+    "n": 90834,
+    "n_treat": 47340,
+    "n_control": 43494
+  },
+  "k_argmax": 0.9623268820045358,
+  "k_ci_95_bootstrap": [
+    0.42883226545126274,
+    0.9999889909064887
+  ],
+  "cao_dinh_don_tren_nguoi": 0.0020349693995944866,
+  "se_dinh_bootstrap": 0.0005623003807961032,
+  "dinh_tach_duoc_khoi_nhieu": true,
+  "n_boot": 400,
+  "k_chon": 0.31377017416385933,
+  "quy_tac": "k nhỏ nhất còn nằm trong 1 sai số bootstrap của đỉnh đường Qini",
+  "nguong_qini": 0.007190971053507951,
+  "nguong_kinh_te": null,
+  "chi_phi_voucher": null,
+  "loi_nhuan_don": null,
+  "nguong_cuoi": 0.007190971053507951,
+  "nguon_nguong_cuoi": "qini_1se",
+  "ti_le_duoc_phat": 0.31377017416385933,
+  "kiem_chung_rct_select": {
+    "tren_nguong": {
+      "ate": 0.009018536309454511,
+      "se": 0.002840921124791258,
+      "ci_thap": 0.0034503309048636455,
+      "ci_cao": 0.014586741714045377,
+      "n": 28501,
+      "n_treat": 14833,
+      "n_control": 13668
+    },
+    "duoi_nguong": {
+      "ate": 0.0013466339095771773,
+      "se": 0.0012046835373299783,
+      "ci_thap": -0.0010145458235895802,
+      "ci_cao": 0.003707813642743935,
+      "n": 62333,
+      "n_treat": 32507,
+      "n_control": 29826
+    },
+    "chenh_lech": 0.007671902399877334,
+    "se_chenh_lech": 0.0030857892446502395,
+    "co_y_nghia_thong_ke": true
+  },
+  "nguong_cu_de_so_sanh": {
+    "nguong": 0.02,
+    "ti_le_duoc_phat": 0.07670035449281107,
+    "don_tang_them": 118.53832413461123,
+    "don_tang_them_nguong_moi": 257.037303355763
+  }
+}
