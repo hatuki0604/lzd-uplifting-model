@@ -241,12 +241,14 @@ Notebook 01 và 02 **chạy ở máy local** — chúng chỉ đọc hai file CS
 ./kaggle_run.sh push 05       # quét số đặc trưng            (gắn 03, 04b)
 ./kaggle_run.sh push 07       # xếp hạng trên Val + tinh chỉnh (gắn 03, 04b, 05)
 ./kaggle_run.sh push 08       # so 4 nhánh + cổng quyết định  (gắn 03, 05, 07)
-./kaggle_run.sh push 09       # đóng gói bản rút gọn          (gắn 03, 04b, 07, 08)
 
-./kaggle_run.sh pull 09       # tải artifact bàn giao về kaggle_output/09/
+./kaggle_run.sh pull 08       # tải kết quả về kaggle_output/08/
 ```
 
-Notebook `10` chạy local sau cùng, vì nó cần bộ artifact bàn giao đã nằm đúng chỗ trong `artifacts/`.
+**Notebook `09` và `10` chạy ở local**, không đẩy lên Kaggle:
+
+- `09` chỉ mất khoảng nửa phút (một lần huấn luyện DR-Learner 30 cột), và `model.pkl` phải được đóng gói bằng đúng Python mà repo khóa — xem phần "Nạp model" bên dưới.
+- `10` cần bộ artifact bàn giao đã nằm đúng chỗ trong `artifacts/`.
 
 Bốn điều cần nhớ:
 
@@ -286,9 +288,15 @@ import lightgbm as lgb
 booster = lgb.Booster(model_file='artifacts/model_booster.txt')
 ```
 
+Bản `model.pkl` cũng dùng được:
+
+```bash
+uv run --frozen python -c "import pickle; m = pickle.load(open('artifacts/model.pkl','rb')); print(type(m).__name__)"
+```
+
 > ⚠️ **`model.pkl` phụ thuộc phiên bản Python.** `cloudpickle` đóng gói class kèm cả code object, mà cấu trúc code object **không tương thích giữa các bản Python**. Phiên bản đóng gói ghi ở `metadata.json → serialization.python_dong_goi`, và **phải khớp với Python đang chạy** — lệch bản sẽ báo `TypeError: code expected at most 16 arguments`.
 >
-> Artifact hiện tại được đóng gói trên Kaggle (**Python 3.12**), trong khi `.python-version` của repo khóa **3.10.9**. Nghĩa là `uv run --frozen python -c "import pickle; pickle.load(...)"` sẽ **không** nạp được `model.pkl` — đây là hệ quả của việc chạy notebook trên Kaggle, không phải lỗi cấu hình. Dùng `model_booster.txt`, hoặc nạp `model.pkl` bằng đúng bản Python ghi trong metadata.
+> Artifact hiện tại đóng gói bằng **Python 3.10.9**, đúng bản mà `.python-version` khóa, nên `uv sync --frozen` là đủ. Đây là lý do **notebook `09` nên chạy ở local chứ không đẩy lên Kaggle**: Kaggle chạy Python 3.12, và một `model.pkl` đóng gói ở đó sẽ không nạp được bằng chính venv của repo — kể cả bộ test cũng phải bỏ qua phép kiểm parity. Dự đoán thì không phụ thuộc chỗ chạy: bản đóng gói local và bản chạy trên Kaggle cho `golden_predictions.csv` **giống nhau từng byte**.
 
 Cách ghép CATE phụ thuộc cấu trúc mô hình, và được ghi rõ trong `metadata.json → booster.cach_ghep_cate`:
 

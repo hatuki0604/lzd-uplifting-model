@@ -1,8 +1,8 @@
 {
   "ten_mo_hinh": "DRLearner",
-  "ngay_dong_goi": "2026-08-20 09:34:12",
+  "ngay_dong_goi": "2026-08-20 17:44:21",
   "run_mode": "full",
-  "run_id": "full-20260820-093115",
+  "run_id": "full-20260820-174350",
   "seed": 42,
   "sieu_tham_so": {
     "n_estimators": 300,
@@ -300,7 +300,7 @@
   "serialization": {
     "writer": "cloudpickle==3.1.2",
     "reader": "pickle.load",
-    "python_dong_goi": "3.12.13",
+    "python_dong_goi": "3.10.9",
     "python_yeu_cau_khi_nap": "phải khớp python_dong_goi — cloudpickle không tương thích chéo bản Python",
     "ban_khong_phu_thuoc_python": [
       "model_booster_k30.txt"
@@ -309,7 +309,7 @@
   "du_lieu_huan_luyen": {
     "nguon": "train.parquet + val.parquet",
     "so_dong": 926669,
-    "giay_huan_luyen": 174.8,
+    "giay_huan_luyen": 29.9,
     "propensity_clip": [
       0.071,
       0.929
