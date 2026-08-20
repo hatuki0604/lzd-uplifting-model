@@ -1,0 +1,285 @@
+{
+  "run_mode": "full",
+  "canh_bao_smoke": null,
+  "cau_hoi": "Xếp hạng đặc trưng khi KHÔNG dùng rct_select thì trông thế nào?",
+  "cach_do": {
+    "mo_hinh": "DRLearner",
+    "sieu_tham_so": {
+      "n_estimators": 200,
+      "learning_rate": 0.04141536110538596,
+      "max_depth": 5,
+      "min_child_samples": 38
+    },
+    "tap_do": "vùng overlap của Val",
+    "nhan": "pseudo-outcome doubly robust đã winsorize (dr_val)",
+    "thuoc_do": "dr_qini",
+    "so_dong_huan_luyen": 200000,
+    "so_dong_do": 43431,
+    "so_lan_xao_moi_cot": 5,
+    "propensity_alpha": 0.071,
+    "seed": 42
+  },
+  "qini_goc": 0.06409,
+  "qini_ngau_nhien": 0.00178,
+  "so_dac_trung_giam_qini": 44,
+  "hang": {
+    "f26": 1,
+    "f22": 2,
+    "f3": 3,
+    "f16": 4,
+    "f29": 5,
+    "f80": 6,
+    "f10": 7,
+    "f4": 8,
+    "f1": 9,
+    "f28": 10,
+    "f20": 11,
+    "f0": 12,
+    "f5": 13,
+    "f38": 14,
+    "f21": 15,
+    "f27": 16,
+    "f6": 17,
+    "f42": 18,
+    "f82": 19,
+    "f23": 20,
+    "f17": 21,
+    "f25": 22,
+    "f35": 23,
+    "f8": 24,
+    "f68": 25,
+    "f52": 26,
+    "f60": 27,
+    "f9": 28,
+    "f13": 29,
+    "f7": 30,
+    "f34": 31,
+    "f11": 32,
+    "f45": 33,
+    "f31": 34,
+    "f53": 35,
+    "f59": 36,
+    "f75": 37,
+    "f12": 38,
+    "f24": 39,
+    "f66": 40,
+    "f2": 41,
+    "f44": 42,
+    "f62": 43,
+    "f40": 44,
+    "f14": 45,
+    "f61": 46,
+    "f79": 47,
+    "f56": 48,
+    "f55": 49,
+    "f49": 50,
+    "f48": 51,
+    "f47": 52,
+    "f46": 53,
+    "f63": 54,
+    "f50": 55,
+    "f54": 56,
+    "f51": 57,
+    "f65": 58,
+    "f36": 59,
+    "f43": 60,
+    "f41": 61,
+    "f58": 62,
+    "f64": 63,
+    "f57": 64,
+    "f19": 65,
+    "f18": 66,
+    "f30": 67,
+    "f81": 68,
+    "f37": 69
+  },
+  "top20": [
+    {
+      "hang": 1,
+      "dac_trung": "f26",
+      "giam_qini": 0.023908,
+      "do_lech_chuan": 0.004388
+    },
+    {
+      "hang": 2,
+      "dac_trung": "f22",
+      "giam_qini": 0.023349,
+      "do_lech_chuan": 0.012956
+    },
+    {
+      "hang": 3,
+      "dac_trung": "f3",
+      "giam_qini": 0.020443,
+      "do_lech_chuan": 0.007727
+    },
+    {
+      "hang": 4,
+      "dac_trung": "f16",
+      "giam_qini": 0.019513,
+      "do_lech_chuan": 0.005631
+    },
+    {
+      "hang": 5,
+      "dac_trung": "f29",
+      "giam_qini": 0.016859,
+      "do_lech_chuan": 0.003937
+    },
+    {
+      "hang": 6,
+      "dac_trung": "f80",
+      "giam_qini": 0.011988,
+      "do_lech_chuan": 0.003039
+    },
+    {
+      "hang": 7,
+      "dac_trung": "f10",
+      "giam_qini": 0.00886,
+      "do_lech_chuan": 0.003746
+    },
+    {
+      "hang": 8,
+      "dac_trung": "f4",
+      "giam_qini": 0.008724,
+      "do_lech_chuan": 0.003752
+    },
+    {
+      "hang": 9,
+      "dac_trung": "f1",
+      "giam_qini": 0.006886,
+      "do_lech_chuan": 0.002641
+    },
+    {
+      "hang": 10,
+      "dac_trung": "f28",
+      "giam_qini": 0.006142,
+      "do_lech_chuan": 0.002148
+    },
+    {
+      "hang": 11,
+      "dac_trung": "f20",
+      "giam_qini": 0.005027,
+      "do_lech_chuan": 0.004247
+    },
+    {
+      "hang": 12,
+      "dac_trung": "f0",
+      "giam_qini": 0.004979,
+      "do_lech_chuan": 0.003866
+    },
+    {
+      "hang": 13,
+      "dac_trung": "f5",
+      "giam_qini": 0.004851,
+      "do_lech_chuan": 0.004039
+    },
+    {
+      "hang": 14,
+      "dac_trung": "f38",
+      "giam_qini": 0.004443,
+      "do_lech_chuan": 0.002772
+    },
+    {
+      "hang": 15,
+      "dac_trung": "f21",
+      "giam_qini": 0.004156,
+      "do_lech_chuan": 0.003999
+    },
+    {
+      "hang": 16,
+      "dac_trung": "f27",
+      "giam_qini": 0.003891,
+      "do_lech_chuan": 0.001954
+    },
+    {
+      "hang": 17,
+      "dac_trung": "f6",
+      "giam_qini": 0.003767,
+      "do_lech_chuan": 0.002627
+    },
+    {
+      "hang": 18,
+      "dac_trung": "f42",
+      "giam_qini": 0.003434,
+      "do_lech_chuan": 0.002099
+    },
+    {
+      "hang": 19,
+      "dac_trung": "f82",
+      "giam_qini": 0.002985,
+      "do_lech_chuan": 0.000975
+    },
+    {
+      "hang": 20,
+      "dac_trung": "f23",
+      "giam_qini": 0.002914,
+      "do_lech_chuan": 0.003377
+    }
+  ],
+  "k_chot": 30,
+  "dac_trung_o_muc_chot": [
+    "f0",
+    "f1",
+    "f3",
+    "f4",
+    "f5",
+    "f6",
+    "f7",
+    "f8",
+    "f9",
+    "f10",
+    "f13",
+    "f16",
+    "f17",
+    "f20",
+    "f21",
+    "f22",
+    "f23",
+    "f25",
+    "f26",
+    "f27",
+    "f28",
+    "f29",
+    "f35",
+    "f38",
+    "f42",
+    "f52",
+    "f60",
+    "f68",
+    "f80",
+    "f82"
+  ],
+  "doi_chieu_voi_04b": {
+    "tuong_quan_hang_spearman": 0.3767,
+    "so_cot_trung_o_top_k": 21,
+    "ti_le_trung": 0.7,
+    "chi_co_o_val": [
+      "f6",
+      "f7",
+      "f20",
+      "f21",
+      "f42",
+      "f52",
+      "f60",
+      "f68",
+      "f82"
+    ],
+    "chi_co_o_rct_select": [
+      "f2",
+      "f12",
+      "f18",
+      "f24",
+      "f31",
+      "f34",
+      "f37",
+      "f40",
+      "f79"
+    ],
+    "y_nghia": "Trùng nhiều nghĩa là tập k cột không phải sản phẩm phụ của riêng một tập đo. Trùng ít nghĩa là nó phụ thuộc mạnh vào chỗ đo thứ hạng."
+  },
+  "canh_bao": [
+    "Thứ hạng ở đây đo trên VÙNG OVERLAP của Val, không phải trên toàn quần thể Val.",
+    "Notebook này KHÔNG thay artifact bàn giao. Bản đang giao vẫn là bản 69 cột.",
+    "Notebook này KHÔNG nạp rct_holdout và KHÔNG nạp rct_select.",
+    "Phép so chốt giữa 30 cột và 69 cột nằm ở notebook 08, đo trên rct_select."
+  ]
+}

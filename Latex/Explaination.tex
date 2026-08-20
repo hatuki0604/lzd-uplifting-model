@@ -1,0 +1,309 @@
+% !TEX program = xelatex
+%==============================================================================
+%  Tài liệu: Hướng Dẫn & Giải Thích Chi Tiết Dự Án Lazada Uplift Modeling
+%  Biên dịch: XeLaTeX (chạy trực tiếp trên Overleaf)
+%==============================================================================
+\documentclass[11pt,a4paper]{article}
+
+%---------------- Font & Ngôn ngữ (XeLaTeX) ----------------
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setdefaultlanguage{vietnamese}
+\setotherlanguage{english}
+
+\setmainfont{TeX Gyre Termes}
+\setsansfont{TeX Gyre Heros}
+\setmonofont[Scale=0.88]{TeX Gyre Cursor}
+
+%---------------- Trình bày trang & Màu sắc ----------------
+\usepackage[a4paper,top=2.2cm,bottom=2.2cm,left=2.2cm,right=2.2cm]{geometry}
+\usepackage{setspace}
+\setstretch{1.15}
+\usepackage{xcolor}
+\definecolor{primary}{HTML}{0288D1}
+\definecolor{secondary}{HTML}{F57C00}
+\definecolor{darkblue}{HTML}{0D47A1}
+\definecolor{darkgreen}{HTML}{2E7D32}
+\definecolor{darkred}{HTML}{C62828}
+\definecolor{bgbox}{HTML}{F5F7FA}
+
+%---------------- Toán & Ký hiệu ----------------
+\usepackage{amsmath,amssymb,amsthm,bm}
+\usepackage{cancel} % Để gạch đi các số hạng triệt tiêu
+\newcommand{\Exp}{\mathbb{E}}
+\newcommand{\Prob}{\mathbb{P}}
+
+%---------------- Bảng, Khung & Tiện ích ----------------
+\usepackage{booktabs,tabularx,array,multirow}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\setlist{nosep,leftmargin=1.5em}
+
+%---------------- TikZ (Vẽ sơ đồ luồng) ----------------
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, shadows}
+
+%---------------- Hyperref ----------------
+\usepackage[colorlinks=true,linkcolor=primary,citecolor=primary,urlcolor=primary]{hyperref}
+
+%---------------- Thiết lập tcolorbox ----------------
+\tcbset{
+    enhanced,
+    fonttitle=\bfseries\color{white},
+    coltitle=white,
+    boxrule=0.8pt,
+    arc=4pt,
+    drop shadow=black!10!white
+}
+
+\newtcolorbox{quadrantbox}[2]{
+    colback=#1!5!white,
+    colframe=#1!80!black,
+    title=#2,
+    halign=left
+}
+
+\newtcolorbox{summarybox}[1][Tóm tắt cốt lõi]{
+    colback=primary!5!white,
+    colframe=primary,
+    title=#1
+}
+
+%==============================================================================
+\begin{document}
+
+\begin{center}
+    {\LARGE \bfseries Hướng Dẫn \& Giải Thích Chi Tiết Dự Án\\[0.3em] Lazada Uplift Modeling (\code{final-lazada})}\\[0.8em]
+    {\large \color{primary}\bfseries Ước Lượng CATE Doubly Robust cho Bài Toán Cá Nhân Hóa Khuyến Mãi}\\[0.5em]
+    \rule{\textwidth}{1pt}
+\end{center}
+
+Tài liệu này tổng hợp toàn bộ kiến thức, lý thuyết toán học, sơ đồ luồng dữ liệu và thiết kế hệ thống của dự án \textbf{Lazada Uplift Modeling} theo cách trực quan và dễ hiểu nhất, phục vụ việc học tập, báo cáo và triển khai thực tế.
+
+---
+
+\section{Bài Toán Thực Tế: Tại Sao Phải Cần Uplift Modeling?}
+
+\subsection{Bài toán phát Voucher tại Lazada}
+Giả sử hệ thống có \textbf{100.000 voucher giảm giá 50.000 VNĐ}. Nếu phát ngẫu nhiên hoặc phát đại trà, chi phí ngân sách sẽ cực kỳ lớn nhưng hiệu quả đem lại không cao.
+
+Trong kinh doanh, khách hàng được chia thành \textbf{4 nhóm chính (4 Quadrants)}:
+
+\vspace{0.5em}
+\begin{figure}[H]
+\centering
+\begin{tabularx}{\textwidth}{XX}
+\begin{quadrantbox}{gray}{1. Sure Things (Chắc chắn mua)}
+\begin{itemize}
+    \item \textbf{Hành vi:} Không tặng voucher $\rightarrow$ Vẫn mua hàng.
+    \item \textbf{Tác động:} \textcolor{darkred}{\textbf{Tốn tiền thừa!}}
+\end{itemize}
+\end{quadrantbox}
+&
+\begin{quadrantbox}{gray}{2. Lost Causes (Không mua nổi)}
+\begin{itemize}
+    \item \textbf{Hành vi:} Tặng voucher $\rightarrow$ Vẫn không mua hàng.
+    \item \textbf{Tác động:} \textcolor{darkred}{\textbf{Phí voucher lãng phí!}}
+\end{itemize}
+\end{quadrantbox}
+\\
+\begin{quadrantbox}{darkred}{3. Sleeping Dogs (Chó ngủ - Tác dụng ngược)}
+\begin{itemize}
+    \item \textbf{Hành vi:} Không tặng $\rightarrow$ Mua bình thường. Tặng voucher $\rightarrow$ Bực bội, bỏ mua.
+    \item \textbf{Tác động:} \textcolor{darkred}{\textbf{Gây hại doanh thu!}}
+\end{itemize}
+\end{quadrantbox}
+&
+\begin{quadrantbox}{darkgreen}{4. Persuadables (ĐỐI TƯỢNG VÀNG)}
+\begin{itemize}
+    \item \textbf{Hành vi:} Không tặng $\rightarrow$ KHÔNG mua. Tặng voucher $\rightarrow$ MUA NGAY!
+    \item \textbf{Tác động:} \textcolor{darkgreen}{\textbf{NHÓM DUY NHẤT CẦN TẶNG!}}
+\end{itemize}
+\end{quadrantbox}
+\end{tabularx}
+\end{figure}
+
+\subsection{Sự khác biệt cốt lõi: Classification vs. Uplift Modeling (CATE)}
+\begin{itemize}
+    \item \textbf{Machine Learning Thông Thường (Classification):} Dự đoán $\Prob(Y=1 \mid X)$ — \textit{"Khách hàng này có khả năng mua hàng hay không?"}. Kết quả mô hình sẽ tập trung nhắm vào nhóm \textbf{Sure Things} (Khách VIP vốn dĩ đã tự mua).
+    \item \textbf{Uplift Modeling / CATE:} Dự đoán hiệu ứng đối chứng điều kiện (Conditional Average Treatment Effect):
+    $$\tau(X) = \Prob(Y=1 \mid T=1, X) - \Prob(Y=1 \mid T=0, X)$$
+    — \textit{"Tỷ lệ mua hàng TĂNG THÊM BAO NHIÊU nếu ta TẶNG VOUCHER ($T=1$) so với KHÔNG TẶNG ($T=0$)?"}. Mô hình nhắm chính xác vào nhóm \textbf{Persuadables}.
+\end{itemize}
+
+---
+
+\section{Thách Thức Dữ Liệu \& Lý Do Dùng Doubly Robust (DR)}
+
+Trên thực tế, dữ liệu lịch sử của Lazada là \textbf{Observational Data (Dữ liệu quan sát)} ($\sim 926.669$ dòng):
+\begin{itemize}
+    \item Hệ thống cũ có xu hướng \textbf{ưu tiên phát voucher cho khách VIP} (những người tương tác nhiều).
+    \item Dẫn đến \textbf{Selection Bias (Thiên vị chọn lọc)}: Nhóm được tặng ($T=1$) và Không tặng ($T=0$) vốn dĩ đã lệch nhau từ đầu. Nếu so sánh trực tiếp, ta sẽ bị lầm tưởng voucher có tác dụng khủng khiếp.
+\end{itemize}
+
+Để giải quyết bias này, dự án áp dụng các kỹ thuật \textbf{Causal Inference hiện đại}:
+\begin{enumerate}
+    \item \textbf{Propensity Model ($e(X)$):} Dự đoán xác suất một người được phát voucher $e(X) = \Prob(T=1 \mid X)$.
+    \item \textbf{Outcome Model ($\mu(X)$):} Dự đoán khả năng mua hàng $\mu_1(X) = \Exp[Y \mid T=1, X]$ và $\mu_0(X) = \Exp[Y \mid T=0, X]$.
+    \item \textbf{Doubly Robust (DR) Estimator:} Kết hợp cả 2 mô hình trên để tạo ra \textbf{nhãn giả (Pseudo-outcome $\tilde{Y}$)}.
+\end{enumerate}
+
+\begin{summarybox}[Tính Chất Doubly Robust (Bảo Vệ 2 Lớp)]
+Chỉ cần \textbf{1 trong 2} mô hình thành phần (Propensity Score $e(X)$ \textbf{HOẶC} Outcome Model $\mu(X)$) đoán đúng, thì kết quả ước lượng Uplift $\tau(X)$ \textbf{vẫn chính xác tuyệt đối, không bị lệch (Unbiased)!}
+\end{summarybox}
+
+---
+
+\section{Sơ Đồ Luồng Tổng Quan Toàn Dự Án (System Flowchart)}
+
+Dưới đây là sơ đồ luồng tổng quan từ giai đoạn Data Science đến Data Engineering/MLOps:
+
+\vspace{0.8em}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    node distance=0.9cm and 0.4cm,
+    box/.style={draw=primary!80!black, fill=primary!8!white, rounded corners=3pt, align=center, font=\small, inner sep=5pt, line width=0.8pt},
+    debox/.style={draw=secondary!80!black, fill=secondary!8!white, rounded corners=3pt, align=center, font=\small, inner sep=5pt, line width=0.8pt},
+    arrow/.style={-Stealth, thick, color=black!70, line width=1pt}
+]
+
+% Left column - DS
+\node[box] (ds1) {\textbf{1. Raw Data Lazada}\\926k Obs (Bias) + 181k RCT (Sạch)};
+\node[box, below=of ds1] (ds2) {\textbf{2. Notebook 01: EDA \& Split}\\Đo Bias (SMD) $\cdot$ Chia 4 tập nghiêm ngặt};
+\node[box, below=of ds2] (ds3) {\textbf{3. Notebook 02: Feature Engineering}\\Loại bỏ cột thừa $\cdot$ Tạo 7 cột dẫn xuất mới};
+\node[box, below=of ds3] (ds4) {\textbf{4. Notebook 03: Model Tuning}\\Crump Overlap $\cdot$ Optuna Tune 6 mô hình};
+\node[box, below=of ds4] (ds5) {\textbf{5. MLflow Tracking}\\Lưu 66 runs thử nghiệm vào \code{mlflow.db}};
+\node[box, below=of ds5] (ds6) {\textbf{6. Notebook 04: Benchmark \& Ablation}\\Đấu mô hình $\cdot$ Rút gọn đặc trưng (62/59 cột)};
+\node[box, below=of ds6] (ds7) {\textbf{7. Xuất Artifacts}\\ \code{model.pkl} + \code{feature\_contract.json}};
+
+% Right column - DE
+\node[debox, right=2.5cm of ds3] (de1) {\textbf{8. Airflow ETL Job}\\Tính offline feature 7d/30d hằng ngày};
+\node[debox, below=of de1] (de2) {\textbf{9. Redis Feature Store}\\Lưu Key-Value JSON (TTL 24-48h)};
+\node[debox, below=of de2] (de3) {\textbf{10. MinIO Model Registry}\\Lưu \code{model.pkl} + \code{latest\_version.txt}};
+\node[debox, below=of de3] (de4) {\textbf{11. AI Service (FastAPI)}\\Nhận \code{user\_id} $\rightarrow$ Đọc Redis $\rightarrow$ Tính online feature};
+\node[debox, below=of de4] (de5) {\textbf{12. Hot-Swap Model Loader}\\Tự nạp mô hình mới không dừng API};
+
+% Connectors
+\draw[arrow] (ds1) -- (ds2);
+\draw[arrow] (ds2) -- (ds3);
+\draw[arrow] (ds3) -- (ds4);
+\draw[arrow] (ds4) -- (ds5);
+\draw[arrow] (ds5) -- (ds6);
+\draw[arrow] (ds6) -- (ds7);
+
+\draw[arrow] (ds7.east) -- ++(0.8,0) |- (de1.west) node[near start, above, font=\scriptsize] {Feature Contract};
+\draw[arrow] (ds7.east) -- ++(0.8,0) |- (de3.west) node[near start, above, font=\scriptsize] {Model Binary};
+\draw[arrow] (de1) -- (de2);
+\draw[arrow] (de2) -- (de4);
+\draw[arrow] (de3) -- (de5);
+\draw[arrow] (de5) -- (de4);
+
+\end{tikzpicture}
+\caption{Sơ đồ luồng xử lý toàn bộ dự án Lazada Uplift Modeling.}
+\end{figure}
+
+---
+
+\section{Chi Tiết Luồng 4 Notebooks Data Science}
+
+Dự án thực thi qua \textbf{4 Notebooks độc lập} chuyển giao dữ liệu bằng tệp Parquet và JSON:
+
+\subsection{Notebook 01: \code{01\_eda.ipynb} (Phân tích Bias \& Chia dữ liệu)}
+\begin{itemize}
+    \item Lọc bỏ các cột hằng số (không đổi) và các cột trùng lặp.
+    \item Đánh giá mức độ Selection Bias bằng chỉ số \textbf{SMD (Standardized Mean Difference)}.
+    \item \textbf{Chia dữ liệu 4 tập phân tầng cố định:}
+    \begin{itemize}
+        \item \textbf{\code{Train} (80\% Obs $\sim$ 741k):} Huấn luyện các mô hình.
+        \item \textbf{\code{Val} (20\% Obs $\sim$ 185k):} Optuna tinh chỉnh siêu tham số.
+        \item \textbf{\code{RCT-select} (50\% RCT $\sim$ 91k):} Chọn mô hình Quán quân.
+        \item \textbf{\code{RCT-holdout} (50\% RCT $\sim$ 91k):} \textbf{Tập bất khả xâm phạm}, chỉ chạy một lần ở bước cuối để báo cáo.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Notebook 02: \code{02\_feature\_engineering.ipynb} (Kỹ nghệ đặc trưng)}
+\begin{itemize}
+    \item Loại bỏ danh sách cột rác thu được từ Notebook 01.
+    \item Tạo thêm \textbf{7 đặc trưng dẫn xuất mới} (tỷ lệ tương tác 7d/30d, số dư ví, tần suất hoạt động...).
+    \item Đạt tổng cộng \textbf{76 đặc trưng đầu vào}. Xuất ra các tệp Parquet sạch.
+\end{itemize}
+
+\subsection{Notebook 03: \code{03\_model\_tuning.ipynb} (Tinh chỉnh siêu tham số)}
+\begin{itemize}
+    \item \textbf{Xử lý Overlap:} Cắt bớt vùng $e(X)$ quá cực đoan theo quy tắc Crump et al. ($e \in [\alpha, 1-\alpha]$).
+    \item Tạo nhãn giả Doubly Robust $\tilde{Y}$ trên tập \code{Val}.
+    \item Sử dụng \textbf{Optuna} thử nghiệm 66 lượt runs với 6 mô hình (\code{DRLearner}, \code{LinearDML}, \code{NonParamDML}, \code{CausalForestDML}, \code{S-Learner}, \code{T-Learner}).
+    \item Đánh giá tối ưu hóa bằng thước đo \textbf{DR-AUUC}. Lưu toàn bộ vào \code{mlflow.db}.
+\end{itemize}
+
+\subsection{Notebook 04: \code{04\_benchmark\_evaluation.ipynb} (Đánh giá cuối \& Đóng gói)}
+\begin{itemize}
+    \item Retrain full mô hình trên 926k dòng (\code{Train} + \code{Val}).
+    \item Đấu mô hình trên \code{RCT-select} $\rightarrow$ \textbf{\code{DRLearner} giành vị trí Quán quân}.
+    \item \textbf{Ablation Study:} Rút gọn đặc trưng xuống **62 cột an toàn (chứa 59 cột gốc)** cho production.
+    \item Mở tập \code{RCT-holdout} đánh giá cuối: Qini Score = $0.0232$, ATE = $0.00376$ (tăng $0.376\%$ tỷ lệ chuyển đổi).
+    \item Xuất bộ artifacts bàn giao: \code{model.pkl}, \code{feature\_contract.json}, \code{metadata.json}.
+\end{itemize}
+
+---
+
+\section{Chi Tiết Toán Học Cơ Chế Doubly Robust (Bảo Vệ 2 Lớp)}
+
+\subsection{Công thức Nhãn Giả Doubly Robust ($\tilde{Y}$)}
+Công thức tạo pseudo-outcome cho từng mẫu quan sát:
+
+\begin{equation}
+\tilde{Y} = \underbrace{\mu_1(X) - \mu_0(X)}_{\text{Dự đoán từ Outcome Model}} \;+\; \underbrace{\frac{T \cdot (Y - \mu_1(X))}{e(X)}}_{\text{Hiệu chỉnh nhóm } T=1} \;-\; \underbrace{\frac{(1-T) \cdot (Y - \mu_0(X))}{1 - e(X)}}_{\text{Hiệu chỉnh nhóm } T=0}
+\end{equation}
+
+\subsection{Chứng minh Toán học Tính Chất Doubly Robust}
+
+\subsubsection{🔴 Trường hợp 1: Outcome Model ($\mu$) ĐÚNG, Propensity Model ($e$) SAI ($e_{sai}$)}
+Vì Outcome Model $\mu(X)$ đúng hoàn toàn, sai số kỳ vọng trung bình bằng 0:
+$$\Exp[Y - \mu_1(X) \mid T=1, X] = 0 \quad \text{và} \quad \Exp[Y - \mu_0(X) \mid T=0, X] = 0$$
+
+Lấy kỳ vọng conditional của $\tilde{Y}$:
+\begin{align*}
+\Exp[\tilde{Y} \mid X] &= \mu_1(X) - \mu_0(X) + \frac{\overbrace{\Exp[T(Y - \mu_1(X)) \mid X]}^{= 0}}{e_{sai}(X)} - \frac{\overbrace{\Exp[(1-T)(Y - \mu_0(X)) \mid X]}^{= 0}}{1 - e_{sai}(X)} \\
+&= \mu_1(X) - \mu_0(X) + 0 - 0 = \tau(X)
+\end{align*}
+\textbf{Kết luận:} Tử số bằng $0$ làm triệt tiêu hoàn toàn sai số của $e_{sai}(X)$. Kết quả trả về đúng CATE $\tau(X)$!
+
+\subsubsection{🔵 Trường hợp 2: Propensity Model ($e$) ĐÚNG, Outcome Model ($\mu$) SAI ($\mu_{sai}$)}
+Vì Propensity Model $e(X)$ đúng, ta có $\Exp[T \mid X] = e(X)$ và $\Exp[1-T \mid X] = 1 - e(X)$.
+Kỳ vọng của cụm hiệu chỉnh nhóm $T=1$:
+$$\Exp\left[ \frac{T \cdot (Y - \mu_1^{sai}(X))}{e(X)} \;\middle|\; X \right] = \frac{e(X) \cdot \left( \Exp[Y^{(1)} \mid X] - \mu_1^{sai}(X) \right)}{e(X)} = \Exp[Y^{(1)} \mid X] - \mu_1^{sai}(X)$$
+
+Thế vào công thức tổng thể $\tilde{Y}$:
+\begin{align*}
+\Exp[\tilde{Y} \mid X] &= \left( \mu_1^{sai}(X) - \mu_0^{sai}(X) \right) + \left( \Exp[Y^{(1)} \mid X] - \mu_1^{sai}(X) \right) - \left( \Exp[Y^{(0)} \mid X] - \mu_0^{sai}(X) \right) \\
+&= \cancel{\mu_1^{sai}(X)} - \cancel{\mu_0^{sai}(X)} + \Exp[Y^{(1)} \mid X] - \cancel{\mu_1^{sai}(X)} - \Exp[Y^{(0)} \mid X] + \cancel{\mu_0^{sai}(X)} \\
+&= \Exp[Y^{(1)} \mid X] - \Exp[Y^{(0)} \mid X] = \tau(X)
+\end{align*}
+\textbf{Kết luận:} Các đại lượng đoán sai $\mu^{sai}(X)$ tự triệt tiêu lẫn nhau. Trọng số $e(X)$ chuẩn xác đã gánh toàn bộ sai số!
+
+\subsection{Bảng Tóm Tắt Tình Huống}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{ccXl}
+\toprule
+\textbf{Outcome ($\mu$)} & \textbf{Propensity ($e$)} & \textbf{Kết quả ước lượng $\tilde{Y}$} & \textbf{Cơ chế triệt tiêu} \\
+\midrule
+\textbf{ĐÚNG} & \textbf{SAI} & \textbf{CHÍNH XÁC} $\tau(X)$ & Tử số của phần hiệu chỉnh bằng 0. \\
+\textbf{SAI} & \textbf{ĐÚNG} & \textbf{CHÍNH XÁC} $\tau(X)$ & Mẫu số $e(X)$ triệt tiêu hết sai số của $\mu^{sai}$. \\
+\textbf{ĐÚNG} & \textbf{ĐÚNG} & \textbf{SIÊU CHÍNH XÁC} & Tốc độ hội tụ $O(n^{-1/2})$ (Neyman Orthogonality). \\
+\textbf{SAI} & \textbf{SAI} & \textbf{BỊ LỆCH (Bias)} & Cả 2 lớp bảo vệ đều thất bại. \\
+\bottomrule
+\end{tabularx}
+\caption{Tóm tắt các kịch bản của tính chất Doubly Robust.}
+\end{table}
+
+---
+
+\section{Kết Luận}
+Dự án \textbf{Lazada Uplift Modeling} thể hiện một quy trình nghiên cứu ứng dụng toàn diện từ lý thuyết Causal Inference, thực nghiệm mô hình hóa nghiêm ngặt đến đóng gói sản phẩm phục vụ cho hạ tầng MLOps/Data Engineering. Việc áp dụng thành công **DRLearner** mang lại khả năng tối ưu hóa chi phí khuyến mãi vượt trội dựa trên ước lượng chính xác hiệu ứng tăng trưởng thực sự (CATE).
+
+\end{document}

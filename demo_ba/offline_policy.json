@@ -1,0 +1,351 @@
+{
+  "schema_version": "offline_policy_evidence_v2",
+  "source": {
+    "dataset": "rct_holdout",
+    "population": 90835,
+    "randomized_treatment": true,
+    "notebook": "notebooks/04_benchmark_evaluation.ipynb",
+    "notebook_section": "Bước 37 và Bước 40",
+    "model": "DRLearner",
+    "seed": 42,
+    "feature_count": 76,
+    "artifact_sha256": {
+      "rct_holdout.parquet": "3fe1796b1c3fe21902b9065e96158a424b05638808243d70fcdb47caa2dc35f2",
+      "model_booster.txt": "697b4ad7a2dc80b333fc9f78ed9f02e4f0db5ed29ce507b10c2bb2ecbd27f0fd",
+      "feature_contract.json": "e536f5c400d406a6ce3762ba377b302a7c4abca6b900528a28e4322a3f393504"
+    }
+  },
+  "baseline": {
+    "control_cvr_percent": 3.324673,
+    "broadcast_incremental_orders": 342,
+    "broadcast_uplift_ci_95_low_pp": 0.136671,
+    "broadcast_uplift_ci_95_high_pp": 0.615444
+  },
+  "default_view_target_percent": 20,
+  "confidence_interval": {
+    "level_percent": 95,
+    "method": "Wald normal interval for difference of two proportions",
+    "interpretation": "Nếu lặp lại cách lấy mẫu RCT nhiều lần, khoảng 95% khoảng tính theo cách này sẽ chứa uplift thật của nhóm. Khoảng chứa 0 nghĩa là chưa đủ bằng chứng rằng uplift của riêng nhóm đó khác 0 ở mức 5%."
+  },
+  "scenarios": [
+    {
+      "target_percent": 10,
+      "selected_customers": 9084,
+      "measured_uplift_pp": 1.418206,
+      "uplift_ci_95_low_pp": 0.145486,
+      "uplift_ci_95_high_pp": 2.690925,
+      "uplift_standard_error_pp": 0.649359,
+      "n_treatment": 4689,
+      "n_control": 4395,
+      "incremental_orders": 129,
+      "effect_retained_percent": 37.7145,
+      "voucher_saved_percent": 90,
+      "campaign_cvr_percent": 3.466501,
+      "feature_profile": [
+        {
+          "feature": "f28",
+          "smd": 0.97976,
+          "selected_mean": 0.782184,
+          "remainder_mean": 0.484531
+        },
+        {
+          "feature": "f35",
+          "smd": 0.903105,
+          "selected_mean": 0.544513,
+          "remainder_mean": 0.164837
+        },
+        {
+          "feature": "fe_inter_f9_f26",
+          "smd": 0.853321,
+          "selected_mean": 13.791788,
+          "remainder_mean": 5.664683
+        },
+        {
+          "feature": "f41",
+          "smd": -0.846455,
+          "selected_mean": 0.292382,
+          "remainder_mean": 0.682022
+        },
+        {
+          "feature": "f26",
+          "smd": 0.812743,
+          "selected_mean": 2.989159,
+          "remainder_mean": 1.489385
+        },
+        {
+          "feature": "f82",
+          "smd": -0.796286,
+          "selected_mean": 0.109841,
+          "remainder_mean": 0.401951
+        },
+        {
+          "feature": "f20",
+          "smd": 0.771788,
+          "selected_mean": 2.107893,
+          "remainder_mean": 0.892877
+        },
+        {
+          "feature": "fe_ratio_f9_f27",
+          "smd": 0.760917,
+          "selected_mean": 1.860402,
+          "remainder_mean": 0.65173
+        },
+        {
+          "feature": "f79",
+          "smd": 0.754839,
+          "selected_mean": -0.142664,
+          "remainder_mean": -0.39013
+        },
+        {
+          "feature": "f11",
+          "smd": 0.742527,
+          "selected_mean": 2.020957,
+          "remainder_mean": 0.915483
+        }
+      ]
+    },
+    {
+      "target_percent": 20,
+      "selected_customers": 18167,
+      "measured_uplift_pp": 1.310381,
+      "uplift_ci_95_low_pp": 0.521414,
+      "uplift_ci_95_high_pp": 2.099348,
+      "uplift_standard_error_pp": 0.402542,
+      "n_treatment": 9364,
+      "n_control": 8803,
+      "incremental_orders": 238,
+      "effect_retained_percent": 69.690383,
+      "voucher_saved_percent": 80,
+      "campaign_cvr_percent": 3.586749,
+      "feature_profile": [
+        {
+          "feature": "f28",
+          "smd": 0.974733,
+          "selected_mean": 0.751585,
+          "remainder_mean": 0.454977
+        },
+        {
+          "feature": "f26",
+          "smd": 0.879944,
+          "selected_mean": 2.860401,
+          "remainder_mean": 1.334113
+        },
+        {
+          "feature": "fe_inter_f9_f26",
+          "smd": 0.8693,
+          "selected_mean": 12.470847,
+          "remainder_mean": 4.979086
+        },
+        {
+          "feature": "f35",
+          "smd": 0.869224,
+          "selected_mean": 0.487361,
+          "remainder_mean": 0.131668
+        },
+        {
+          "feature": "f20",
+          "smd": 0.786419,
+          "selected_mean": 1.94535,
+          "remainder_mean": 0.781644
+        },
+        {
+          "feature": "f11",
+          "smd": 0.768816,
+          "selected_mean": 1.896592,
+          "remainder_mean": 0.808397
+        },
+        {
+          "feature": "f9",
+          "smd": 0.741089,
+          "selected_mean": 3.562144,
+          "remainder_mean": 2.327651
+        },
+        {
+          "feature": "f16",
+          "smd": 0.724429,
+          "selected_mean": 3.351454,
+          "remainder_mean": 2.211666
+        },
+        {
+          "feature": "f13",
+          "smd": 0.689226,
+          "selected_mean": 2.209537,
+          "remainder_mean": 1.391176
+        },
+        {
+          "feature": "fe_ratio_f9_f27",
+          "smd": 0.687231,
+          "selected_mean": 1.568411,
+          "remainder_mean": 0.573652
+        }
+      ]
+    },
+    {
+      "target_percent": 30,
+      "selected_customers": 27250,
+      "measured_uplift_pp": 0.964914,
+      "uplift_ci_95_low_pp": 0.38291,
+      "uplift_ci_95_high_pp": 1.546918,
+      "uplift_standard_error_pp": 0.296946,
+      "n_treatment": 14119,
+      "n_control": 13131,
+      "incremental_orders": 263,
+      "effect_retained_percent": 76.974522,
+      "voucher_saved_percent": 70,
+      "campaign_cvr_percent": 3.614142,
+      "feature_profile": [
+        {
+          "feature": "f26",
+          "smd": 0.93849,
+          "selected_mean": 2.738516,
+          "remainder_mean": 1.168321
+        },
+        {
+          "feature": "f28",
+          "smd": 0.923316,
+          "selected_mean": 0.712472,
+          "remainder_mean": 0.429369
+        },
+        {
+          "feature": "fe_inter_f9_f26",
+          "smd": 0.886172,
+          "selected_mean": 11.507368,
+          "remainder_mean": 4.321811
+        },
+        {
+          "feature": "f20",
+          "smd": 0.795216,
+          "selected_mean": 1.801762,
+          "remainder_mean": 0.676947
+        },
+        {
+          "feature": "f11",
+          "smd": 0.780324,
+          "selected_mean": 1.774591,
+          "remainder_mean": 0.705235
+        },
+        {
+          "feature": "f35",
+          "smd": 0.765164,
+          "selected_mean": 0.415393,
+          "remainder_mean": 0.1117
+        },
+        {
+          "feature": "f3",
+          "smd": 0.725207,
+          "selected_mean": 3.1253,
+          "remainder_mean": 1.830382
+        },
+        {
+          "feature": "f9",
+          "smd": 0.724581,
+          "selected_mean": 3.414354,
+          "remainder_mean": 2.214643
+        },
+        {
+          "feature": "f14",
+          "smd": 0.710709,
+          "selected_mean": 0.593669,
+          "remainder_mean": 0.329634
+        },
+        {
+          "feature": "f16",
+          "smd": 0.710458,
+          "selected_mean": 3.218446,
+          "remainder_mean": 2.105852
+        }
+      ]
+    },
+    {
+      "target_percent": 50,
+      "selected_customers": 45418,
+      "measured_uplift_pp": 0.535569,
+      "uplift_ci_95_low_pp": 0.142063,
+      "uplift_ci_95_high_pp": 0.929074,
+      "uplift_standard_error_pp": 0.200772,
+      "n_treatment": 23565,
+      "n_control": 21853,
+      "incremental_orders": 243,
+      "effect_retained_percent": 71.209047,
+      "voucher_saved_percent": 50,
+      "campaign_cvr_percent": 3.59246,
+      "feature_profile": [
+        {
+          "feature": "f26",
+          "smd": 0.995432,
+          "selected_mean": 2.43029,
+          "remainder_mean": 0.848435
+        },
+        {
+          "feature": "fe_inter_f9_f26",
+          "smd": 0.875274,
+          "selected_mean": 9.788433,
+          "remainder_mean": 3.16637
+        },
+        {
+          "feature": "f28",
+          "smd": 0.855118,
+          "selected_mean": 0.645139,
+          "remainder_mean": 0.383455
+        },
+        {
+          "feature": "f3",
+          "smd": 0.835047,
+          "selected_mean": 2.939648,
+          "remainder_mean": 1.498036
+        },
+        {
+          "feature": "f14",
+          "smd": 0.808824,
+          "selected_mean": 0.556106,
+          "remainder_mean": 0.261577
+        },
+        {
+          "feature": "f17",
+          "smd": 0.807305,
+          "selected_mean": 1.278456,
+          "remainder_mean": 0.615331
+        },
+        {
+          "feature": "f7",
+          "smd": 0.802242,
+          "selected_mean": 3.44522,
+          "remainder_mean": 2.057621
+        },
+        {
+          "feature": "f13",
+          "smd": 0.800117,
+          "selected_mean": 2.028824,
+          "remainder_mean": 1.080862
+        },
+        {
+          "feature": "f20",
+          "smd": 0.784325,
+          "selected_mean": 1.535222,
+          "remainder_mean": 0.493537
+        },
+        {
+          "feature": "f9",
+          "smd": 0.771191,
+          "selected_mean": 3.210055,
+          "remainder_mean": 1.939031
+        }
+      ]
+    },
+    {
+      "target_percent": 100,
+      "selected_customers": 90835,
+      "measured_uplift_pp": 0.376058,
+      "uplift_ci_95_low_pp": 0.136671,
+      "uplift_ci_95_high_pp": 0.615444,
+      "uplift_standard_error_pp": 0.122138,
+      "n_treatment": 47342,
+      "n_control": 43493,
+      "incremental_orders": 342,
+      "effect_retained_percent": 100.0,
+      "voucher_saved_percent": 0,
+      "campaign_cvr_percent": 3.700731
+    }
+  ],
+  "caveat": "Đây là mô phỏng policy và uplift thực đo trên RCT holdout, không phải kết quả realtime của cohort 10 khách. Qini holdout có KTC 95% chứa 0 nên không được diễn giải là mô hình đã chứng minh xếp hạng tốt ở mức ý nghĩa 95%. Feature profile là tương quan mô tả, không phải nguyên nhân."
+}

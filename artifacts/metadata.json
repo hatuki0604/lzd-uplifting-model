@@ -1,18 +1,28 @@
 {
   "ten_mo_hinh": "DRLearner",
-  "ngay_huan_luyen": "2026-08-13 11:50:40",
+  "ngay_dong_goi": "2026-08-20 09:34:12",
   "run_mode": "full",
+  "run_id": "full-20260820-093115",
   "seed": 42,
   "sieu_tham_so": {
-    "n_estimators": 350,
-    "learning_rate": 0.01777174904859463,
+    "n_estimators": 300,
+    "learning_rate": 0.01459007452373112,
     "max_depth": 4,
-    "min_child_samples": 30
+    "min_child_samples": 46
+  },
+  "chuoi_notebook": {
+    "nguon_xep_hang_dac_trung": "notebook 07 — permutation importance trên vùng overlap Val",
+    "nguon_sieu_tham_so": "notebook 07 — Optuna 12 trial, DR-AUUC trên Val",
+    "nguon_bang_chung": "notebook 08 — 4 nhánh × 5 seed trên rct_select, bootstrap theo cặp",
+    "run_mode": {
+      "07": "full",
+      "08": "full",
+      "09": "full"
+    }
   },
   "dac_trung": [
     "f0",
     "f1",
-    "f2",
     "f3",
     "f4",
     "f5",
@@ -21,74 +31,29 @@
     "f8",
     "f9",
     "f10",
-    "f11",
-    "f12",
     "f13",
-    "f14",
     "f16",
     "f17",
-    "f18",
-    "f19",
     "f20",
     "f21",
     "f22",
     "f23",
-    "f24",
     "f25",
     "f26",
     "f27",
     "f28",
     "f29",
-    "f30",
-    "f31",
-    "f34",
     "f35",
-    "f36",
-    "f37",
     "f38",
-    "f40",
-    "f41",
     "f42",
-    "f43",
-    "f44",
-    "f45",
-    "f46",
-    "f47",
-    "f48",
-    "f49",
-    "f50",
-    "f51",
     "f52",
-    "f53",
-    "f54",
-    "f55",
-    "f56",
-    "f57",
-    "f58",
-    "f59",
     "f60",
-    "f61",
-    "f62",
-    "f63",
-    "f64",
-    "f65",
-    "f66",
     "f68",
-    "f75",
-    "f79",
     "f80",
-    "f81",
-    "f82",
-    "fe_ratio_f1_f2",
-    "fe_ratio_f14_f16",
-    "fe_ratio_f9_f27",
-    "fe_inter_f9_f26",
-    "fe_inter_f14_f27",
-    "fe_nonzero_top10",
-    "fe_flag_sum"
+    "f82"
   ],
-  "so_dac_trung": 76,
-  "dac_trung_ban_full": [
+  "so_dac_trung": 30,
+  "dac_trung_day_du": [
     "f0",
     "f1",
     "f2",
@@ -157,342 +122,210 @@
     "f79",
     "f80",
     "f81",
-    "f82",
-    "fe_ratio_f1_f2",
-    "fe_ratio_f14_f16",
-    "fe_ratio_f9_f27",
-    "fe_inter_f9_f26",
-    "fe_inter_f14_f27",
-    "fe_nonzero_top10",
-    "fe_flag_sum"
+    "f82"
   ],
-  "chon_so_dac_trung": {
-    "k_chot": 76,
-    "ly_do": "k nhỏ nhất thỏa mãn cả ba điều kiện (có tính bền)",
-    "luoi_quet": [
-      8,
-      16,
-      23,
-      31,
-      39,
-      47,
-      54,
-      62,
-      76
-    ],
-    "cach_dung_luoi": "cận dưới = k đạt 50% gain, cận trên = số đặc trưng có gain > 0",
-    "dieu_kien": [
-      "KTC Qini không chứa 0",
-      "điều kiện trên đúng ở mọi k lớn hơn (tính bền)",
-      "KTC hiệu so với bản đầy đủ chứa 0"
-    ],
-    "tap_dung_de_chot": "rct_select",
-    "bang_quet": [
-      {
-        "k": 8,
-        "Qini": 0.01611,
-        "Qini_lo": -0.00682,
-        "Qini_hi": 0.04045,
-        "Hiệu so với đầy đủ": 0.01128,
-        "Bền": false,
-        "Đạt": false
+  "so_dac_trung_day_du": 69,
+  "khong_co_dac_trung_dan_xuat": true,
+  "cong_quyet_dinh": {
+    "ma_bam": "a4f5c2ff6ae084f6",
+    "ket_qua": {
+      "dieu_kien_1": true,
+      "dieu_kien_2": true,
+      "dieu_kien_3": true,
+      "dat": true
+    },
+    "dinh_nghia": {
+      "nhanh_moc": "A",
+      "nhanh_ung_vien": "D",
+      "dieu_kien_1": {
+        "mo_ta": "Hai thứ hạng độc lập phải đồng ý về tập k cột",
+        "quy_tac": "so_cot_trung_o_top_k >= nguong",
+        "nguong": 20
       },
-      {
-        "k": 16,
-        "Qini": 0.02505,
-        "Qini_lo": 0.00139,
-        "Qini_hi": 0.04863,
-        "Hiệu so với đầy đủ": 0.00227,
-        "Bền": false,
-        "Đạt": false
+      "dieu_kien_2": {
+        "mo_ta": "Nhánh ứng viên không tụt quá sàn nhiễu so với mốc",
+        "quy_tac": "Qini_TB(D) >= Qini_TB(A) - san_nhieu"
       },
-      {
-        "k": 23,
-        "Qini": 0.03033,
-        "Qini_lo": 0.00633,
-        "Qini_hi": 0.05381,
-        "Hiệu so với đầy đủ": -0.0031,
-        "Bền": false,
-        "Đạt": false
+      "dieu_kien_3": {
+        "mo_ta": "Bootstrap theo cặp trên rct_select không CHỨNG MINH được D tệ hơn A",
+        "quy_tac": "can_tren_KTC_95(Qini(D) - Qini(A)) >= 0",
+        "vi_sao_khong_so_voi_san_nhieu": "KTC bootstrap đo dao động do LẤY MẪU DÒNG trên rct_select (rộng cỡ ±0,02), còn san_nhieu đo dao động do ĐỔI SEED (cỡ ±0,006). Hai thang lệch nhau cả bậc độ lớn. Đòi cận dưới bootstrap vượt -san_nhieu là đòi một phép kiểm mà bộ dữ liệu này không đủ công suất để qua, KỂ CẢ KHI D thật sự tốt hơn A — nên nó đo công suất của tập dữ liệu chứ không đo chất lượng của bản 30 cột.",
+        "bao_cao_kem": "bien_do_chung_minh_duoc = -can_duoi_KTC_95 — biên độ \"không kém hơn\" chặt nhất mà bộ dữ liệu này chứng nhận được. Phải ghi vào báo cáo thay vì giả vờ chứng nhận được một biên độ chặt hơn."
       },
-      {
-        "k": 31,
-        "Qini": 0.02405,
-        "Qini_lo": 0.00016,
-        "Qini_hi": 0.04812,
-        "Hiệu so với đầy đủ": 0.00313,
-        "Bền": false,
-        "Đạt": false
-      },
-      {
-        "k": 39,
-        "Qini": 0.03074,
-        "Qini_lo": 0.00696,
-        "Qini_hi": 0.05523,
-        "Hiệu so với đầy đủ": -0.00358,
-        "Bền": false,
-        "Đạt": false
-      },
-      {
-        "k": 47,
-        "Qini": 0.02479,
-        "Qini_lo": 0.00101,
-        "Qini_hi": 0.0494,
-        "Hiệu so với đầy đủ": 0.00236,
-        "Bền": false,
-        "Đạt": false
-      },
-      {
-        "k": 54,
-        "Qini": 0.03247,
-        "Qini_lo": 0.00954,
-        "Qini_hi": 0.05833,
-        "Hiệu so với đầy đủ": -0.00527,
-        "Bền": false,
-        "Đạt": false
-      },
-      {
-        "k": 62,
-        "Qini": 0.02366,
-        "Qini_lo": -0.00045,
-        "Qini_hi": 0.04786,
-        "Hiệu so với đầy đủ": 0.00353,
-        "Bền": false,
-        "Đạt": false
-      },
-      {
-        "k": 76,
-        "Qini": 0.02705,
-        "Qini_lo": 0.00281,
-        "Qini_hi": 0.05347,
-        "Hiệu so với đầy đủ": 0.0,
-        "Bền": true,
-        "Đạt": true
-      }
-    ]
+      "phat_bieu_toi_da": "khong te hon (KHONG duoc phat bieu la tot hon)",
+      "he_qua_neu_dat": "Được phép dựng notebook 09 để xuất bản 30 cột song song. Việc ĐÈ artifact bàn giao vẫn là một bước riêng, xin phép riêng.",
+      "he_qua_neu_khong_dat": "Giữ nguyên bản 69 cột. Ghi kết quả vào báo cáo như một phát hiện âm."
+    }
   },
-  "chon_dac_trung_redis": {
-    "k_redis": 62,
-    "k_toi_thieu_thong_ke": 54,
-    "k_an_toan_tuyet_doi": 62,
-    "ly_do": "mốc an toàn tuyệt đối — sai lệch dự đoán đo được bằng 0",
-    "so_cot_dien_mac_dinh": 14,
-    "cach_do": "giữ nguyên mô hình, thay đặc trưng ngoài top-k bằng trung vị Train+Val, đo Qini trên rct_select",
-    "bang_quet": [
+  "bang_chung_rct_select": {
+    "san_nhieu": 0.00442,
+    "nhanh": [
       {
-        "k": 8,
-        "Qini": -0.008042,
-        "Qini_lo": -0.029424,
-        "Qini_hi": 0.020362,
-        "Lệch dự đoán": 0.734563,
-        "Bền": false,
-        "Đạt": false
+        "ma": "A",
+        "nhan": "69 cột · hparam 69",
+        "so_cot": 69,
+        "Qini_TB": 0.02566,
+        "sd_seed": 0.00399,
+        "lech_so_voi_A": 0.0,
+        "qini_tung_seed": [
+          0.03075,
+          0.02103,
+          0.02556,
+          0.02148,
+          0.02949
+        ]
       },
       {
-        "k": 16,
-        "Qini": -0.003275,
-        "Qini_lo": -0.028335,
-        "Qini_hi": 0.022814,
-        "Lệch dự đoán": 0.578682,
-        "Bền": false,
-        "Đạt": false
+        "ma": "B",
+        "nhan": "30 cột (hạng rct_select) · hparam 69",
+        "so_cot": 30,
+        "Qini_TB": 0.02447,
+        "sd_seed": 0.00573,
+        "lech_so_voi_A": -0.00119,
+        "qini_tung_seed": [
+          0.02973,
+          0.01739,
+          0.01999,
+          0.02279,
+          0.03245
+        ]
       },
       {
-        "k": 23,
-        "Qini": 0.002779,
-        "Qini_lo": -0.022599,
-        "Qini_hi": 0.028378,
-        "Lệch dự đoán": 0.22717,
-        "Bền": false,
-        "Đạt": false
+        "ma": "C",
+        "nhan": "30 cột (hạng Val) · hparam 69",
+        "so_cot": 30,
+        "Qini_TB": 0.01916,
+        "sd_seed": 0.002,
+        "lech_so_voi_A": -0.00651,
+        "qini_tung_seed": [
+          0.0196,
+          0.01668,
+          0.02205,
+          0.0203,
+          0.01716
+        ]
       },
       {
-        "k": 31,
-        "Qini": 0.007574,
-        "Qini_lo": -0.018128,
-        "Qini_hi": 0.033121,
-        "Lệch dự đoán": 0.209428,
-        "Bền": false,
-        "Đạt": false
-      },
-      {
-        "k": 39,
-        "Qini": 0.016538,
-        "Qini_lo": -0.00751,
-        "Qini_hi": 0.042791,
-        "Lệch dự đoán": 0.211251,
-        "Bền": false,
-        "Đạt": false
-      },
-      {
-        "k": 47,
-        "Qini": 0.016721,
-        "Qini_lo": -0.007619,
-        "Qini_hi": 0.042483,
-        "Lệch dự đoán": 0.173388,
-        "Bền": false,
-        "Đạt": false
-      },
-      {
-        "k": 54,
-        "Qini": 0.026157,
-        "Qini_lo": 0.001714,
-        "Qini_hi": 0.052607,
-        "Lệch dự đoán": 0.057723,
-        "Bền": true,
-        "Đạt": true
-      },
-      {
-        "k": 62,
-        "Qini": 0.027046,
-        "Qini_lo": 0.00281,
-        "Qini_hi": 0.053475,
-        "Lệch dự đoán": 0.0,
-        "Bền": true,
-        "Đạt": true
-      },
-      {
-        "k": 76,
-        "Qini": 0.027046,
-        "Qini_lo": 0.00281,
-        "Qini_hi": 0.053475,
-        "Lệch dự đoán": 0.0,
-        "Bền": true,
-        "Đạt": true
+        "ma": "D",
+        "nhan": "30 cột (hạng Val) · hparam 30",
+        "so_cot": 30,
+        "Qini_TB": 0.02529,
+        "sd_seed": 0.00597,
+        "lech_so_voi_A": -0.00037,
+        "qini_tung_seed": [
+          0.02881,
+          0.03506,
+          0.02137,
+          0.01823,
+          0.023
+        ]
       }
     ],
-    "mentor_goi_y": 25
+    "bootstrap_theo_cap": {
+      "nhanh_moc": "A",
+      "nhanh_ung_vien": "D",
+      "n_bootstrap": 1000,
+      "qini_moc": [
+        0.02629,
+        0.00217,
+        0.05189
+      ],
+      "qini_ung_vien": [
+        0.0214,
+        -0.00285,
+        0.04592
+      ],
+      "hieu": -0.00489,
+      "hieu_ci": [
+        -0.02669,
+        0.0174
+      ],
+      "ktc_hieu_khac_0": false,
+      "be_rong_ktc": 0.04409,
+      "bien_do_chung_minh_duoc": 0.02669,
+      "ghi_chu_hai_thang_nhieu": "be_rong_ktc đo dao động do LẤY MẪU DÒNG trên rct_select; san_nhieu đo dao động do ĐỔI SEED. Hai thang khác nhau cả bậc độ lớn, không so trực tiếp với nhau được."
+    },
+    "doi_chieu_hai_xep_hang": {
+      "so_cot_trung": 21,
+      "tong": 30,
+      "tuong_quan_hang_spearman": 0.3767,
+      "hai_tap_giong_het": false
+    },
+    "phat_bieu_toi_da": "Bản 30 cột KHÔNG TỆ HƠN bản 69 cột trong phạm vi phân giải của phép đo. KHÔNG được phát biểu là \"tốt hơn\"."
   },
-  "file_mo_hinh": {
-    "model.pkl": "76 đặc trưng — bản bàn giao, khớp feature_contract.json",
-    "model_full.pkl": "76 đặc trưng — bản có con số holdout một lần",
-    "model_booster.txt": "cây LightGBM dạng text — đọc bằng lgb.Booster(model_file=...), chạy được trên mọi bản Python. Dùng bản này nếu môi trường phục vụ khác môi trường huấn luyện."
+  "gioi_han": {
+    "chua_do_tren_rct_holdout": true,
+    "giai_thich": "rct_holdout đã được mở đúng một lần cho bản 69 cột ở notebook 04c. Bản 30 cột này KHÔNG được đo lại ở đó — đo lại là lần mở thứ hai, phá quy tắc \"một lần chọn, một lần mở holdout\" của dự án.",
+    "bang_chung_ngoai_mau_duy_nhat": "rct_select",
+    "thien_vi_con_lai": "Thứ hạng đặc trưng dẫn xuất từ Val nên rct_select là tập giữ ngoài thật cho phép so 30-vs-69. Nhưng k = 30 thì thừa kế từ notebook 05, nơi k được chọn trên chính rct_select.",
+    "bien_do_chung_minh_duoc": 0.02669,
+    "doc_bien_do_the_nao": "Biên độ \"không kém hơn\" chặt nhất mà rct_select chứng nhận được xấp xỉ bằng chính giá trị Qini, nên điều kiện 3 của cổng gần như không mang thông tin. Quyết định thực chất dựa vào điều kiện 1 và 2.",
+    "so_sanh_voi_ban_69_cot": "Bản 69 cột CÓ số trên rct_holdout (Qini 0,0161, KTC chứa 0, xếp 6/6). Đổi sang bản 30 cột nghĩa là mô hình đang chạy production không còn con số nào trên tập giữ cuối."
+  },
+  "file_ban_giao": {
+    "model.pkl": "DRLearner trên 30 đặc trưng — bản khớp feature_contract.json",
+    "model_booster.txt": "LGBMRegressor tầng cuối — đầu vào đúng các cột trong feature_contract.json, đầu ra là CATE",
+    "feature_contract.json": "30 cột, đúng thứ tự đưa vào mô hình",
+    "golden_predictions.csv": "1000 dự đoán mẫu để DE đối chiếu"
+  },
+  "booster": {
+    "files": [
+      {
+        "file": "model_booster.txt",
+        "so_cot_dau_vao": 30,
+        "so_cay": 300,
+        "mo_ta": "LGBMRegressor tầng cuối — đầu vào đúng các cột trong feature_contract.json, đầu ra là CATE"
+      }
+    ],
+    "so_cot_contract": 30,
+    "cot_bo_sung": [],
+    "cach_ghep_cate": "booster.predict(X)",
+    "lech_so_voi_model_pkl": 0.0
+  },
+  "golden_predictions": {
+    "file": "golden_predictions.csv",
+    "nguon": "rct_select, 1000 data_id nhỏ nhất theo thứ tự chuỗi",
+    "so_dong": 1000,
+    "ma_bam": "ae56e6fdd558df1b",
+    "dung_sai": 0.0,
+    "cach_kiem": "dựng vector theo feature_contract.json cho từng data_id, gọi predict_cate, so với cột cate — chênh lệch phải nằm trong dung_sai"
   },
   "serialization": {
     "writer": "cloudpickle==3.1.2",
     "reader": "pickle.load",
-    "python_dong_goi": "3.10.9",
+    "python_dong_goi": "3.12.13",
     "python_yeu_cau_khi_nap": "phải khớp python_dong_goi — cloudpickle không tương thích chéo bản Python",
-    "ghi_chu": "Notebook 04 chạy trên Kaggle (Python 3.12). cloudpickle đóng gói class kèm code object, mà code object không tương thích ngược giữa các bản Python, nên bản Kaggle không nạp được bằng môi trường khoá 3.10.9. Cây LightGBM đã được rút ra dạng text (độc lập phiên bản) rồi đóng gói lại bằng 3.10.9. KHÔNG huấn luyện lại: dự đoán trùng khít tuyệt đối với bản Kaggle (lệch 0.0 trên 3.000 mẫu), độ quan trọng đặc trưng cũng trùng khít.",
-    "ban_khong_phu_thuoc_python": "model_booster.txt (định dạng text của LightGBM)"
+    "ban_khong_phu_thuoc_python": [
+      "model_booster.txt"
+    ]
   },
   "du_lieu_huan_luyen": {
     "nguon": "train.parquet + val.parquet",
     "so_dong": 926669,
-    "giay_huan_luyen": 234.6
+    "giay_huan_luyen": 174.8,
+    "propensity_clip": [
+      0.071,
+      0.929
+    ]
   },
-  "metric_rct_holdout": {
-    "DRLearner": {
-      "qini": 0.02324,
-      "qini_ci": [
-        -0.00066,
-        0.04831
-      ],
-      "auuc": 0.02541,
-      "auuc_ci": [
-        -0.00061,
-        0.05236
-      ],
-      "uplift_at_10": 0.014182,
-      "uplift_at_20": 0.013104,
-      "uplift_at_30": 0.009649
-    },
-    "SLearner": {
-      "qini": 0.02253,
-      "qini_ci": [
-        -4e-05,
-        0.04706
-      ],
-      "auuc": 0.0242,
-      "auuc_ci": [
-        -6e-05,
-        0.05028
-      ],
-      "uplift_at_10": 0.012018,
-      "uplift_at_20": 0.007269,
-      "uplift_at_30": 0.008063
-    },
-    "CausalForestDML": {
-      "qini": 0.01901,
-      "qini_ci": [
-        -0.00362,
-        0.04321
-      ],
-      "auuc": 0.02048,
-      "auuc_ci": [
-        -0.00385,
-        0.04636
-      ],
-      "uplift_at_10": 0.014608,
-      "uplift_at_20": 0.010443,
-      "uplift_at_30": 0.007159
-    },
-    "NonParamDML": {
-      "qini": 0.01732,
-      "qini_ci": [
-        -0.00637,
-        0.04055
-      ],
-      "auuc": 0.01892,
-      "auuc_ci": [
-        -0.00667,
-        0.04385
-      ],
-      "uplift_at_10": 0.014705,
-      "uplift_at_20": 0.011739,
-      "uplift_at_30": 0.00762
-    },
-    "LinearDML": {
-      "qini": 0.01534,
-      "qini_ci": [
-        -0.0056,
-        0.0372
-      ],
-      "auuc": 0.01667,
-      "auuc_ci": [
-        -0.00588,
-        0.04051
-      ],
-      "uplift_at_10": 0.008516,
-      "uplift_at_20": 0.006479,
-      "uplift_at_30": 0.006347
-    },
-    "TLearner": {
-      "qini": 0.01482,
-      "qini_ci": [
-        -0.00936,
-        0.04235
-      ],
-      "auuc": 0.016,
-      "auuc_ci": [
-        -0.01001,
-        0.04567
-      ],
-      "uplift_at_10": 0.012871,
-      "uplift_at_20": 0.007223,
-      "uplift_at_30": 0.006525
-    }
-  },
-  "ate_rct_holdout": {
-    "ate": 0.003760579162227648,
-    "se": 0.001221382033089461,
-    "ci_thap": 0.0013667143660079958,
-    "ci_cao": 0.0061544439584473,
-    "n_treat": 47342,
-    "n_control": 43493
-  },
-  "chon_quan_quan": {
-    "tap_dung": "rct_select",
-    "so_doi_thu_bi_vuot_co_y_nghia": 2,
-    "tong_doi_thu": 5,
-    "tuong_quan_hang_select_vs_holdout": 0.2571
-  },
-  "kiem_chung_metric": {
-    "1. Xếp hạng ngẫu nhiên → Qini ≈ 0": true,
-    "2. ATE khớp phép tính tay": true,
-    "3. Biết trước ≫ ngẫu nhiên": true,
-    "4. Qini giảm đơn điệu theo nhiễu": true
-  },
-  "n_bootstrap": 1000,
-  "ghi_chu": "CausalForestDML huấn luyện trên mẫu con nhỏ hơn các mô hình khác, không so sánh ngang hàng được về mặt cỡ dữ liệu. Qini của bản rút gọn đo trên rct_select — chính tập đã dùng để chọn k — nên lạc quan hơn thực tế; bảng benchmark báo cáo dùng bản đầy đủ."
+  "lich_su_ban_giao": {
+    "thoi_diem_doi": "2026-08-20 17:00:46",
+    "thay_the_cho": "bản 69 đặc trưng (notebook 04c)",
+    "ban_truoc_luu_o": [
+      "model_k69.pkl",
+      "model_booster_k69.txt",
+      "feature_contract_k69.json",
+      "metadata_k69.json",
+      "golden_predictions_k69.csv"
+    ],
+    "cach_lui": "chép 5 file *_k69 đè lại lên tên chuẩn tương ứng",
+    "ban_goc_notebook_09": [
+      "model_k30.pkl",
+      "model_booster_k30.txt",
+      "feature_contract_k30.json",
+      "metadata_k30.json",
+      "golden_predictions_k30.csv"
+    ],
+    "ly_do": "Bản 30 cột không tệ hơn bản 69 cột trong phạm vi phân giải của phép đo (notebook 08, cổng đạt cả 3 điều kiện), và DE chỉ phải cấp 30 cột thay vì 69."
+  }
 }

@@ -1,0 +1,708 @@
+{
+  "ten_mo_hinh": "DRLearner",
+  "ngay_dong_goi": "2026-08-19 04:35:48",
+  "run_mode": "full",
+  "seed": 42,
+  "sieu_tham_so": {
+    "n_estimators": 200,
+    "learning_rate": 0.04141536110538596,
+    "max_depth": 5,
+    "min_child_samples": 38
+  },
+  "chuoi_notebook": {
+    "04a_run_id": "full-20260819-024811-f35fc7",
+    "04b_run_id": "full-20260819-041542-60b756",
+    "run_mode": {
+      "04a": "full",
+      "04b": "full",
+      "04c": "full"
+    },
+    "nguon_tham_so_notebook_03": {
+      "file": "best_params.json",
+      "run_mode": "full"
+    }
+  },
+  "dac_trung": [
+    "f0",
+    "f1",
+    "f2",
+    "f3",
+    "f4",
+    "f5",
+    "f6",
+    "f7",
+    "f8",
+    "f9",
+    "f10",
+    "f11",
+    "f12",
+    "f13",
+    "f14",
+    "f16",
+    "f17",
+    "f18",
+    "f19",
+    "f20",
+    "f21",
+    "f22",
+    "f23",
+    "f24",
+    "f25",
+    "f26",
+    "f27",
+    "f28",
+    "f29",
+    "f30",
+    "f31",
+    "f34",
+    "f35",
+    "f36",
+    "f37",
+    "f38",
+    "f40",
+    "f41",
+    "f42",
+    "f43",
+    "f44",
+    "f45",
+    "f46",
+    "f47",
+    "f48",
+    "f49",
+    "f50",
+    "f51",
+    "f52",
+    "f53",
+    "f54",
+    "f55",
+    "f56",
+    "f57",
+    "f58",
+    "f59",
+    "f60",
+    "f61",
+    "f62",
+    "f63",
+    "f64",
+    "f65",
+    "f66",
+    "f68",
+    "f75",
+    "f79",
+    "f80",
+    "f81",
+    "f82"
+  ],
+  "so_dac_trung": 69,
+  "dac_trung_day_du": [
+    "f0",
+    "f1",
+    "f2",
+    "f3",
+    "f4",
+    "f5",
+    "f6",
+    "f7",
+    "f8",
+    "f9",
+    "f10",
+    "f11",
+    "f12",
+    "f13",
+    "f14",
+    "f16",
+    "f17",
+    "f18",
+    "f19",
+    "f20",
+    "f21",
+    "f22",
+    "f23",
+    "f24",
+    "f25",
+    "f26",
+    "f27",
+    "f28",
+    "f29",
+    "f30",
+    "f31",
+    "f34",
+    "f35",
+    "f36",
+    "f37",
+    "f38",
+    "f40",
+    "f41",
+    "f42",
+    "f43",
+    "f44",
+    "f45",
+    "f46",
+    "f47",
+    "f48",
+    "f49",
+    "f50",
+    "f51",
+    "f52",
+    "f53",
+    "f54",
+    "f55",
+    "f56",
+    "f57",
+    "f58",
+    "f59",
+    "f60",
+    "f61",
+    "f62",
+    "f63",
+    "f64",
+    "f65",
+    "f66",
+    "f68",
+    "f75",
+    "f79",
+    "f80",
+    "f81",
+    "f82"
+  ],
+  "so_dac_trung_day_du": 69,
+  "khong_co_dac_trung_dan_xuat": true,
+  "quyet_dinh_da_khoa": {
+    "file": "decisions_locked.json",
+    "ma_bam": "3960fbe51566cb1a"
+  },
+  "chon_so_dac_trung": {
+    "luoi": [
+      9,
+      18,
+      28,
+      38,
+      47,
+      69
+    ],
+    "so_dong_moi_muc": 200000,
+    "cung_co_mau_voi_04a": false,
+    "cach_dung_luoi": "cận dưới = k giữ 50% tổng mức tụt Qini của permutation importance, cận trên = số đặc trưng có mức tụt dương",
+    "moc_so_sanh": "k = 69 của chính vòng quét, cùng cỡ mẫu",
+    "dieu_kien": [
+      "KTC Qini không chứa 0",
+      "điều kiện trên đúng ở mọi k lớn hơn (tính bền)",
+      "KTC hiệu so với bản đầy đủ chứa 0"
+    ],
+    "bang": [
+      {
+        "k": 9,
+        "Qini": -0.00043,
+        "Qini_lo": -0.02346,
+        "Qini_hi": 0.02438,
+        "Hiệu so với đầy đủ": 0.03179,
+        "Bền": false,
+        "Đạt": false
+      },
+      {
+        "k": 18,
+        "Qini": 0.00405,
+        "Qini_lo": -0.02102,
+        "Qini_hi": 0.02864,
+        "Hiệu so với đầy đủ": 0.02702,
+        "Bền": false,
+        "Đạt": false
+      },
+      {
+        "k": 28,
+        "Qini": 0.01563,
+        "Qini_lo": -0.00969,
+        "Qini_hi": 0.04098,
+        "Hiệu so với đầy đủ": 0.01511,
+        "Bền": false,
+        "Đạt": false
+      },
+      {
+        "k": 38,
+        "Qini": 0.01373,
+        "Qini_lo": -0.01034,
+        "Qini_hi": 0.03814,
+        "Hiệu so với đầy đủ": 0.01712,
+        "Bền": false,
+        "Đạt": false
+      },
+      {
+        "k": 47,
+        "Qini": 0.01803,
+        "Qini_lo": -0.00509,
+        "Qini_hi": 0.04314,
+        "Hiệu so với đầy đủ": 0.01284,
+        "Bền": false,
+        "Đạt": false
+      },
+      {
+        "k": 69,
+        "Qini": 0.03075,
+        "Qini_lo": 0.0064,
+        "Qini_hi": 0.05522,
+        "Hiệu so với đầy đủ": 0.0,
+        "Bền": true,
+        "Đạt": true
+      }
+    ],
+    "k_chot": 69,
+    "ly_do": "k nhỏ nhất thỏa mãn cả ba điều kiện (có tính bền)",
+    "tap_dung_de_chot": "rct_select"
+  },
+  "do_quan_trong_dac_trung": {
+    "permutation": {
+      "do_tren": "rct_select",
+      "so_lan_xao": 5,
+      "so_dong": 90834,
+      "qini_goc": 0.027444,
+      "so_dac_trung_giam_qini": 47,
+      "top20": [
+        {
+          "dac_trung": "f23",
+          "giam_qini": 0.019123,
+          "do_lech_chuan": 0.005951
+        },
+        {
+          "dac_trung": "f17",
+          "giam_qini": 0.015418,
+          "do_lech_chuan": 0.004127
+        },
+        {
+          "dac_trung": "f22",
+          "giam_qini": 0.012249,
+          "do_lech_chuan": 0.004417
+        },
+        {
+          "dac_trung": "f79",
+          "giam_qini": 0.01213,
+          "do_lech_chuan": 0.002423
+        },
+        {
+          "dac_trung": "f13",
+          "giam_qini": 0.012,
+          "do_lech_chuan": 0.008804
+        },
+        {
+          "dac_trung": "f38",
+          "giam_qini": 0.010528,
+          "do_lech_chuan": 0.001355
+        },
+        {
+          "dac_trung": "f12",
+          "giam_qini": 0.009969,
+          "do_lech_chuan": 0.003265
+        },
+        {
+          "dac_trung": "f0",
+          "giam_qini": 0.008105,
+          "do_lech_chuan": 0.004137
+        },
+        {
+          "dac_trung": "f31",
+          "giam_qini": 0.007819,
+          "do_lech_chuan": 0.006733
+        },
+        {
+          "dac_trung": "f35",
+          "giam_qini": 0.007812,
+          "do_lech_chuan": 0.005064
+        },
+        {
+          "dac_trung": "f40",
+          "giam_qini": 0.007724,
+          "do_lech_chuan": 0.002485
+        },
+        {
+          "dac_trung": "f3",
+          "giam_qini": 0.007643,
+          "do_lech_chuan": 0.00191
+        },
+        {
+          "dac_trung": "f1",
+          "giam_qini": 0.007122,
+          "do_lech_chuan": 0.00651
+        },
+        {
+          "dac_trung": "f26",
+          "giam_qini": 0.006344,
+          "do_lech_chuan": 0.002151
+        },
+        {
+          "dac_trung": "f37",
+          "giam_qini": 0.005521,
+          "do_lech_chuan": 0.001236
+        },
+        {
+          "dac_trung": "f28",
+          "giam_qini": 0.004913,
+          "do_lech_chuan": 0.005396
+        },
+        {
+          "dac_trung": "f29",
+          "giam_qini": 0.00473,
+          "do_lech_chuan": 0.001653
+        },
+        {
+          "dac_trung": "f9",
+          "giam_qini": 0.004613,
+          "do_lech_chuan": 0.006388
+        },
+        {
+          "dac_trung": "f2",
+          "giam_qini": 0.004609,
+          "do_lech_chuan": 0.001645
+        },
+        {
+          "dac_trung": "f16",
+          "giam_qini": 0.003659,
+          "do_lech_chuan": 0.003997
+        }
+      ]
+    },
+    "gain": {
+      "nguon": "tầng cuối DR-Learner, importance_type=gain",
+      "so_dac_trung_gain_duong": 65,
+      "top20": {
+        "f31": 1302.91,
+        "f30": 1069.8,
+        "f2": 710.33,
+        "f20": 638.59,
+        "f22": 516.51,
+        "f1": 507.85,
+        "f8": 492.9,
+        "f5": 472.94,
+        "f38": 459.49,
+        "f68": 422.96,
+        "f6": 412.83,
+        "f35": 408.77,
+        "f27": 399.22,
+        "f79": 356.97,
+        "f23": 345.13,
+        "f18": 331.48,
+        "f29": 313.71,
+        "f26": 307.05,
+        "f28": 299.66,
+        "f10": 295.37
+      }
+    },
+    "tuong_quan_hang_gain_vs_permutation": 0.4933
+  },
+  "file_ban_giao": {
+    "model.pkl": "DRLearner trên 69 đặc trưng — bản khớp feature_contract.json",
+    "model_full.pkl": "không sinh (k chốt = toàn bộ đặc trưng)",
+    "feature_contract.json": "69 cột, đúng thứ tự đưa vào mô hình",
+    "golden_predictions.csv": "1000 dự đoán mẫu để DE đối chiếu",
+    "decisions_locked.json": "quyết định đã khóa ở 04b, trước khi holdout được mở",
+    "model_booster.txt": "LGBMRegressor tầng cuối — đầu vào đúng các cột trong feature_contract.json, đầu ra là CATE"
+  },
+  "booster": {
+    "files": [
+      {
+        "file": "model_booster.txt",
+        "so_cot_dau_vao": 69,
+        "so_cay": 200,
+        "mo_ta": "LGBMRegressor tầng cuối — đầu vào đúng các cột trong feature_contract.json, đầu ra là CATE"
+      }
+    ],
+    "so_cot_contract": 69,
+    "cot_bo_sung": [],
+    "cach_ghep_cate": "booster.predict(X)",
+    "lech_so_voi_model_pkl": 0.0
+  },
+  "golden_predictions": {
+    "file": "golden_predictions.csv",
+    "nguon": "rct_select, 1.000 data_id nhỏ nhất theo thứ tự chuỗi",
+    "so_dong": 1000,
+    "ma_bam": "1c3c933e7adfcdc1",
+    "dung_sai": 0.0,
+    "cach_kiem": "dựng vector theo feature_contract.json cho từng data_id, gọi predict_cate, so với cột cate — chênh lệch phải nằm trong dung_sai"
+  },
+  "serialization": {
+    "writer": "cloudpickle==3.1.2",
+    "reader": "pickle.load",
+    "python_dong_goi": "3.12.13",
+    "python_yeu_cau_khi_nap": "phải khớp python_dong_goi — cloudpickle không tương thích chéo bản Python",
+    "ban_khong_phu_thuoc_python": [
+      "model_booster.txt"
+    ]
+  },
+  "du_lieu_huan_luyen": {
+    "nguon": "train.parquet + val.parquet",
+    "so_dong_quan_quan": 926669,
+    "so_dong_moi_mo_hinh": {
+      "SLearner": 926669,
+      "TLearner": 926669,
+      "DRLearner": 926669,
+      "LinearDML": 926669,
+      "NonParamDML": 926669,
+      "CausalForestDML": 926669
+    },
+    "cung_co_mau": true,
+    "cach_dung_ban_giao": "mô hình của 04a (926,669 dòng, toàn bộ đặc trưng)",
+    "giay_huan_luyen_ban_giao": 213.6
+  },
+  "metric_rct_select": {
+    "xep_hang": [
+      {
+        "Mô hình": "DRLearner",
+        "Qini": 0.027444,
+        "Qini_lo": 0.003879,
+        "Qini_hi": 0.053327,
+        "AUUC": 0.029608,
+        "AUUC_lo": 0.00445,
+        "AUUC_hi": 0.057631,
+        "Uplift@20%": 0.010884
+      },
+      {
+        "Mô hình": "SLearner",
+        "Qini": 0.018556,
+        "Qini_lo": -0.005333,
+        "Qini_hi": 0.041594,
+        "AUUC": 0.019572,
+        "AUUC_lo": -0.005881,
+        "AUUC_hi": 0.044609,
+        "Uplift@20%": 0.008153
+      },
+      {
+        "Mô hình": "TLearner",
+        "Qini": 0.016144,
+        "Qini_lo": -0.009304,
+        "Qini_hi": 0.042139,
+        "AUUC": 0.017414,
+        "AUUC_lo": -0.009833,
+        "AUUC_hi": 0.045203,
+        "Uplift@20%": 0.0106
+      },
+      {
+        "Mô hình": "CausalForestDML",
+        "Qini": 0.01546,
+        "Qini_lo": -0.007666,
+        "Qini_hi": 0.037365,
+        "AUUC": 0.016513,
+        "AUUC_lo": -0.008242,
+        "AUUC_hi": 0.040513,
+        "Uplift@20%": 0.008794
+      },
+      {
+        "Mô hình": "NonParamDML",
+        "Qini": 0.014607,
+        "Qini_lo": -0.008885,
+        "Qini_hi": 0.03858,
+        "AUUC": 0.015619,
+        "AUUC_lo": -0.009455,
+        "AUUC_hi": 0.041381,
+        "Uplift@20%": 0.010204
+      },
+      {
+        "Mô hình": "LinearDML",
+        "Qini": 0.006613,
+        "Qini_lo": -0.015736,
+        "Qini_hi": 0.027704,
+        "AUUC": 0.007022,
+        "AUUC_lo": -0.016853,
+        "AUUC_hi": 0.029652,
+        "Uplift@20%": 0.006893
+      },
+      {
+        "Mô hình": "— Ngẫu nhiên (mốc)",
+        "Qini": -0.005115,
+        "Qini_lo": -0.02641,
+        "Qini_hi": 0.01503,
+        "AUUC": NaN,
+        "AUUC_lo": NaN,
+        "AUUC_hi": NaN,
+        "Uplift@20%": 0.006228
+      }
+    ],
+    "so_sanh_theo_cap": [
+      {
+        "Đối thủ": "SLearner",
+        "Chênh lệch Qini": 0.009775,
+        "KTC thấp": -0.018231,
+        "KTC cao": 0.036543,
+        "KTC khác 0": false,
+        "Quán quân thắng": false
+      },
+      {
+        "Đối thủ": "TLearner",
+        "Chênh lệch Qini": 0.011569,
+        "KTC thấp": -0.014855,
+        "KTC cao": 0.038916,
+        "KTC khác 0": false,
+        "Quán quân thắng": false
+      },
+      {
+        "Đối thủ": "LinearDML",
+        "Chênh lệch Qini": 0.021723,
+        "KTC thấp": -0.004036,
+        "KTC cao": 0.048995,
+        "KTC khác 0": false,
+        "Quán quân thắng": false
+      },
+      {
+        "Đối thủ": "NonParamDML",
+        "Chênh lệch Qini": 0.01435,
+        "KTC thấp": -0.011123,
+        "KTC cao": 0.038485,
+        "KTC khác 0": false,
+        "Quán quân thắng": false
+      },
+      {
+        "Đối thủ": "CausalForestDML",
+        "Chênh lệch Qini": 0.013072,
+        "KTC thấp": -0.012235,
+        "KTC cao": 0.037386,
+        "KTC khác 0": false,
+        "Quán quân thắng": false
+      }
+    ],
+    "moc_ngau_nhien": [
+      -0.005115,
+      -0.02641,
+      0.01503
+    ],
+    "qini_ban_giao": [
+      0.027444,
+      0.003879,
+      0.053327
+    ]
+  },
+  "metric_rct_holdout": {
+    "CausalForestDML": {
+      "qini": 0.02966,
+      "qini_ci": [
+        0.00868,
+        0.05261
+      ],
+      "auuc": 0.03204,
+      "auuc_ci": [
+        0.00938,
+        0.05669
+      ],
+      "uplift_at_10": 0.017485,
+      "uplift_at_20": 0.007354,
+      "uplift_at_30": 0.006242
+    },
+    "NonParamDML": {
+      "qini": 0.028,
+      "qini_ci": [
+        0.00581,
+        0.05229
+      ],
+      "auuc": 0.03027,
+      "auuc_ci": [
+        0.0064,
+        0.05634
+      ],
+      "uplift_at_10": 0.017243,
+      "uplift_at_20": 0.009688,
+      "uplift_at_30": 0.007349
+    },
+    "TLearner": {
+      "qini": 0.02703,
+      "qini_ci": [
+        0.00083,
+        0.05195
+      ],
+      "auuc": 0.0292,
+      "auuc_ci": [
+        0.00088,
+        0.05623
+      ],
+      "uplift_at_10": 0.011576,
+      "uplift_at_20": 0.009813,
+      "uplift_at_30": 0.007645
+    },
+    "SLearner": {
+      "qini": 0.02643,
+      "qini_ci": [
+        0.00335,
+        0.05126
+      ],
+      "auuc": 0.02838,
+      "auuc_ci": [
+        0.00362,
+        0.0547
+      ],
+      "uplift_at_10": 0.013541,
+      "uplift_at_20": 0.007253,
+      "uplift_at_30": 0.008343
+    },
+    "LinearDML": {
+      "qini": 0.02443,
+      "qini_ci": [
+        0.00419,
+        0.04774
+      ],
+      "auuc": 0.02648,
+      "auuc_ci": [
+        0.00455,
+        0.05211
+      ],
+      "uplift_at_10": 0.008786,
+      "uplift_at_20": 0.009114,
+      "uplift_at_30": 0.008088
+    },
+    "DRLearner": {
+      "qini": 0.01612,
+      "qini_ci": [
+        -0.00808,
+        0.04226
+      ],
+      "auuc": 0.01749,
+      "auuc_ci": [
+        -0.00856,
+        0.04569
+      ],
+      "uplift_at_10": 0.00845,
+      "uplift_at_20": 0.010163,
+      "uplift_at_30": 0.007132
+    }
+  },
+  "metric_ban_giao_rct_holdout": {
+    "so_dac_trung": 69,
+    "qini": 0.016117837182112404,
+    "qini_ci": [
+      -0.008075546249272043,
+      0.04226068974182957
+    ],
+    "auuc": 0.017488251031521167,
+    "auuc_ci": [
+      -0.008556058655057843,
+      0.045694502861867804
+    ],
+    "uplift_at_10": 0.008449928468998877,
+    "uplift_at_20": 0.010162665664911252,
+    "uplift_at_30": 0.007131690588569044
+  },
+  "ate_rct_holdout": {
+    "ate": 0.003760579162227648,
+    "se": 0.001221382033089461,
+    "ci_thap": 0.0013667143660079958,
+    "ci_cao": 0.0061544439584473,
+    "n_treat": 47342,
+    "n_control": 43493
+  },
+  "chon_quan_quan": {
+    "tap_dung": "rct_select",
+    "so_doi_thu_bi_vuot_co_y_nghia": 0,
+    "tong_doi_thu": 5,
+    "tuong_quan_hang_select_vs_holdout": -0.3714
+  },
+  "kiem_chung_metric": {
+    "04b": {
+      "1. Xếp hạng ngẫu nhiên → Qini ≈ 0": true,
+      "2. ATE khớp phép tính tay": true,
+      "3. Biết trước ≫ ngẫu nhiên": true,
+      "4. Qini giảm đơn điệu theo nhiễu": true
+    },
+    "04c": {
+      "1. Xếp hạng ngẫu nhiên → Qini ≈ 0": true,
+      "2. ATE khớp phép tính tay": true,
+      "3. Biết trước ≫ ngẫu nhiên": true,
+      "4. Qini giảm đơn điệu theo nhiễu": true
+    }
+  },
+  "n_bootstrap": 1000,
+  "ghi_chu": "Số đặc trưng bàn giao chốt trên rct_select — chính tập đã dùng để chọn — nên con số Qini của nó ở đó lạc quan hơn thực tế; metric_ban_giao_rct_holdout mới là con số đo trên tập chưa từng nhìn. Nếu cung_co_mau = false thì bảng benchmark trộn chất lượng phương pháp với lượng dữ liệu."
+}

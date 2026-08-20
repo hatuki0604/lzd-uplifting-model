@@ -1,7 +1,20 @@
 {
-  "so_dong": {
-    "train": 741335,
-    "rct_select": 90834
+  "seed": 42,
+  "phan_chia": {
+    "file": "artifacts/split_assignment.parquet",
+    "so_dong": {
+      "train": 741335,
+      "val": 185334,
+      "rct_holdout": 90835,
+      "rct_select": 90834
+    },
+    "ma_bam_data_id": {
+      "train": "ec2102f219c3ee10",
+      "val": "5ce6b7f16d311853",
+      "rct_select": "7b4d22087e06d85f",
+      "rct_holdout": "4aa23ccab45fee42"
+    },
+    "cach_chia": "train_test_split, stratify theo (is_treat, label), random_state=42; quan sát 80/20, RCT 50/50"
   },
   "cot_hang_so": [
     "f70"
@@ -16,22 +29,44 @@
     "f77": "f68",
     "f78": "f69"
   },
+  "cot_nhi_phan_du_thua": [
+    "f67",
+    "f69",
+    "f73",
+    "f74",
+    "f76"
+  ],
+  "nhom_nhi_phan_du_thua": [
+    [
+      "f66",
+      "f67"
+    ],
+    [
+      "f68",
+      "f69",
+      "f73",
+      "f74"
+    ],
+    [
+      "f75",
+      "f76"
+    ]
+  ],
   "cot_can_loai_bo": [
     "f15",
     "f32",
     "f33",
     "f39",
+    "f67",
+    "f69",
     "f70",
     "f71",
     "f72",
+    "f73",
+    "f74",
+    "f76",
     "f77",
     "f78"
-  ],
-  "cot_thua_tuyen_tinh": [
-    "f67",
-    "f69",
-    "f74",
-    "f76"
   ],
   "dac_trung_sach": [
     "f0",
@@ -97,18 +132,14 @@
     "f64",
     "f65",
     "f66",
-    "f67",
     "f68",
-    "f69",
-    "f73",
-    "f74",
     "f75",
-    "f76",
     "f79",
     "f80",
     "f81",
     "f82"
   ],
+  "so_dac_trung_sach": 69,
   "top20_thien_vi": [
     "f9",
     "f16",
@@ -145,13 +176,14 @@
     "ty_le_thoi_phong": 12.690396459744662,
     "smd_max_train": 0.9108519554138184,
     "smd_max_test": 0.05371588096022606,
-    "so_dac_trung_smd_lon_025": 46
+    "so_dac_trung_smd_lon_025": 43
   },
   "khuyen_nghi": [
+    "Dùng đúng 69 đặc trưng trong dac_trung_sach, giữ nguyên thứ tự — không thêm đặc trưng dẫn xuất",
     "Chia dữ liệu phải stratify theo (is_treat, label) vì positive chỉ ~2%",
     "Dùng importance_type=\"gain\" khi tính feature importance, vì gần nửa số cột là nhị phân",
     "Không cần chuẩn hóa scale — toàn bộ mô hình dùng cây quyết định",
-    "Cắt propensity score trong khoảng [0.01, 0.99] để tránh trọng số bùng nổ",
+    "Cắt propensity score để tránh trọng số bùng nổ; ngưỡng do notebook 03 tự tính",
     "Chỉ đo Qini/AUUC trên tập RCT; trên dữ liệu quan sát phải dùng DR-score"
   ]
 }
